@@ -38,41 +38,44 @@ class Navbar extends Component {
     );
 
     return (
-      <nav className="navbar navbar-expand-lg navbar-dark purple mb-3">
-        <div className="container">
-          <Link className="nav-brand text-white" to="/">
-            aTracker
-          </Link>
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#basicExampleNav"
-            aria-controls="basicExampleNav"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon" />
-          </button>
-
-          <div className="collapse navbar-collapse" id="basicExampleNav">
-            {/* <ul className="navbar-nav ml-auto">
-              <li className="nav-item">
-                <Link className="nav-link" to="/login">
-                  Login
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/register">
-                  Register
-                </Link>
-              </li>
-            </ul> */}
-
-            {isAuthenticated ? authLinks : guestLinks}
-          </div>
-        </div>
+      <nav class="z-depth-3 navbar-expand-lg navbar-dark purple darken-3 py-1 fixed-top text-white">
+        <h2 class="text-center">HanaPh</h2>
       </nav>
+      // <nav className="navbar navbar-expand-lg navbar-dark purple mb-3">
+      //   <div className="container">
+      //     <Link className="nav-brand text-white" to="/">
+      //       aTracker
+      //     </Link>
+      //     <button
+      //       className="navbar-toggler"
+      //       type="button"
+      //       data-toggle="collapse"
+      //       data-target="#basicExampleNav"
+      //       aria-controls="basicExampleNav"
+      //       aria-expanded="false"
+      //       aria-label="Toggle navigation"
+      //     >
+      //       <span className="navbar-toggler-icon" />
+      //     </button>
+
+      //     <div className="collapse navbar-collapse" id="basicExampleNav">
+      //       {/* <ul className="navbar-nav ml-auto">
+      //         <li className="nav-item">
+      //           <Link className="nav-link" to="/login">
+      //             Login
+      //           </Link>
+      //         </li>
+      //         <li className="nav-item">
+      //           <Link className="nav-link" to="/register">
+      //             Register
+      //           </Link>
+      //         </li>
+      //       </ul> */}
+
+      //       {isAuthenticated ? authLinks : guestLinks}
+      //     </div>
+      //   </div>
+      // </nav>
     );
   }
 }

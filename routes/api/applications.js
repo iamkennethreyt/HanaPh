@@ -6,14 +6,16 @@ const passport = require("passport");
 // Advertisement model
 const Application = require("../../models/Application");
 
-// @route   GET api/posts
-// @desc    Get posts
+// @route   GET api/applications
+// @desc    Get applications
 // @access  Public
 router.get("/", (req, res) => {
   Application.find()
     .sort({ date: -1 })
     .then(apps => res.json(apps))
-    .catch(err => res.status(404).json({ Application: "No posts found" }));
+    .catch(err =>
+      res.status(404).json({ Application: "No applications found" })
+    );
 });
 
 // @route   GET api/advertisements/:id

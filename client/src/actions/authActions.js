@@ -4,11 +4,24 @@ import jwt_decode from "jwt-decode";
 
 import { GET_ERRORS, SET_CURRENT_USER } from "./types";
 
-//Register User
-export const registerUser = (userdata, history) => dispatch => {
+//Register Applicant
+export const registerApplicant = (userdata, history) => dispatch => {
   axios
-    .post("/api/users/register", userdata)
-    .then(res => history.push("/login"))
+    .post("/api/users/register/applicant", userdata)
+    .then(res => history.push("/"))
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
+//Register Employer
+export const registerEmployer = (userdata, history) => dispatch => {
+  axios
+    .post("/api/users/register/employer", userdata)
+    .then(res => history.push("/"))
     .catch(err =>
       dispatch({
         type: GET_ERRORS,

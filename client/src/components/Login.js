@@ -9,7 +9,7 @@ class Login extends Component {
   constructor() {
     super();
     this.state = {
-      username: "",
+      email: "",
       password: "",
       errors: {}
     };
@@ -39,7 +39,7 @@ class Login extends Component {
     e.preventDefault();
 
     const userData = {
-      username: this.state.username,
+      email: this.state.email,
       password: this.state.password
     };
 
@@ -57,15 +57,15 @@ class Login extends Component {
             <input
               type="text"
               className={classnames("form-control mt-4", {
-                "is-invalid": errors.username
+                "is-invalid": errors.email
               })}
               placeholder="User name"
-              name="username"
-              value={this.state.username}
+              name="email"
+              value={this.state.email}
               onChange={this.onChange}
             />
-            {errors.username && (
-              <div className="invalid-feedback">{errors.username}</div>
+            {errors.email && (
+              <div className="invalid-feedback">{errors.email}</div>
             )}
 
             <input
