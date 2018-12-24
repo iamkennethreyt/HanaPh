@@ -25,9 +25,7 @@ npm run client
 
 ## App Info
 
-The application can only be register an account, login, and change the password
-
-### Note
+The Application has two different types of users. The employer who will be post the job advertisements of their company. The Applicant user can find the advertisement and send their applications to the company. once the application sent, the employer user will see who are the applicants applied by their job advertisments
 
 ### Note
 

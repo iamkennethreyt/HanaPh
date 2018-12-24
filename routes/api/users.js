@@ -10,17 +10,17 @@ const key = require("../../config/key").secretOrkey;
 //load validation
 const ValidateRegisterInput = require("../../validations/register");
 const ValidateLoginInput = require("../../validations/login");
-const validateAccountSettingsInput = require("../../validations/accountSettings");
+const validateAccountSettingsPasswordInput = require("../../validations/accountSettingsPassword");
 
 //load User model
 const User = require("../../models/User");
 
 router.get("/test", (req, res) => res.json({ name: "hello world" }));
 
-//@route    POST api/users/register
+//@route    POST api/users/register/applicant
 //@desc     register new user
 //@access   public
-router.post("/register", (req, res) => {
+router.post("/register/applicant", (req, res) => {
   const { errors, isValid } = ValidateRegisterInput(req.body);
 
   //check validation
@@ -28,15 +28,59 @@ router.post("/register", (req, res) => {
     return res.status(400).json(errors);
   }
 
-  User.findOne({ username: req.body.username }).then(user => {
-    errors.username = "Username already exists";
+  User.findOne({ email: req.body.email }).then(user => {
+    errors.email = "Email already exists";
     if (user) {
       return res.status(400).json(errors);
     } else {
       const newUSer = new User({
         name: req.body.name,
-        username: req.body.username,
-        password: req.body.password
+        email: req.body.email,
+        password: req.body.password,
+        contactInfo: req.body.contactInfo,
+        cityProvince: req.body.cityProvince,
+        type: "applicant"
+      });
+
+      bcrypt.genSalt(10, (err, salt) => {
+        bcrypt.hash(newUSer.password, salt, (err, hash) => {
+          if (err) throw err;
+          newUSer.password = hash;
+          newUSer
+            .save()
+            .then(user => res.json(user))
+            .catch(err => console.log(err));
+        });
+      });
+    }
+  });
+});
+
+//@route    POST api/users/register/employer
+//@desc     register new user
+//@access   public
+router.post("/register/employer", (req, res) => {
+  const { errors, isValid } = ValidateRegisterInput(req.body);
+
+  //check validation
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+
+  User.findOne({ email: req.body.email }).then(user => {
+    errors.email = "Email already exists";
+    if (user) {
+      return res.status(400).json(errors);
+    } else {
+      const newUSer = new User({
+        name: req.body.name,
+        email: req.body.email,
+        password: req.body.password,
+        contactInfo: req.body.contactInfo,
+        cityProvince: req.body.cityProvince,
+        details: req.body.details,
+        completeAddress: req.body.completeAddress,
+        type: "employer"
       });
 
       bcrypt.genSalt(10, (err, salt) => {
@@ -57,7 +101,7 @@ router.post("/register", (req, res) => {
 //@desc     login user and returning  JWT web token
 //@access   public
 router.post("/login", (req, res) => {
-  const username = req.body.username;
+  const email = req.body.email;
   const password = req.body.password;
 
   const { errors, isValid } = ValidateLoginInput(req.body);
@@ -68,10 +112,10 @@ router.post("/login", (req, res) => {
   }
 
   //Find User by Email
-  User.findOne({ username }).then(user => {
+  User.findOne({ email }).then(user => {
     //chech user
     if (!user) {
-      errors.username = "Username not found";
+      errors.email = "Email not found";
       return res.status(404).json(errors);
     }
 
@@ -84,7 +128,8 @@ router.post("/login", (req, res) => {
         const payload = {
           id: user.id,
           name: user.name,
-          username: user.username
+          email: user.email,
+          type: user.type
         };
 
         //sign token
@@ -101,14 +146,14 @@ router.post("/login", (req, res) => {
   });
 });
 
-//@route    POST api/users/accountsettings
+//@route    PUT api/users/accountsettings
 //@desc     account settings change password
 //@access   private
-router.post(
-  "/accountsettings",
+router.put(
+  "/accountsettings/password",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    const { errors, isValid } = validateAccountSettingsInput(req.body);
+    const { errors, isValid } = validateAccountSettingsPasswordInput(req.body);
 
     //check validation
     if (!isValid) {
@@ -140,6 +185,33 @@ router.post(
         return res.status(400).json(errors);
       }
     });
+  }
+);
+
+router.put(
+  "/accountsettings",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    // const { errors, isValid } = ValidateRegisterInput(req.body);
+
+    // //check validation
+    // if (!isValid) {
+    //   return res.status(400).json(errors);
+    // }
+
+    const userFields = {};
+
+    if (req.body.name) userFields.name = req.body.name;
+    if (req.body.email) userFields.email = req.body.email;
+    if (req.body.details) userFields.details = req.body.details;
+    if (req.body.contactInfo) userFields.contactInfo = req.body.contactInfo;
+    if (req.body.cityProvince) userFields.cityProvince = req.body.cityProvince;
+
+    User.findOneAndUpdate(
+      { _id: req.user.id },
+      { $set: userFields },
+      { new: true }
+    ).then(user => res.json(user));
   }
 );
 

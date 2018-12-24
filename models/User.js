@@ -8,13 +8,38 @@ const UserSchema = new Schema({
     type: String,
     required: true
   },
-  username: {
+  email: {
     type: String,
     required: true
+  },
+  contactInfo: {
+    type: String,
+    required: true
+  },
+  cityProvince: {
+    type: String,
+    required: true
+  },
+  completeAddress: {
+    type: String
+  },
+  details: {
+    type: String
   },
   password: {
     type: String,
     required: true
+  },
+  type: {
+    type: String,
+    required: true
+  },
+  resume: {
+    type: String
+  },
+  date: {
+    type: Date,
+    default: Date.now
   }
 });
 
