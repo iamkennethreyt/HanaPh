@@ -11,28 +11,28 @@ class FooterPage extends Component {
   };
 
   render() {
-    const { isAuthenticated, user } = this.props.auth;
+    // const { isAuthenticated, user } = this.props.auth;
     return (
-      <footer class="page-footer font-small purple darken-3 fixed-bottom text-center">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="py-3 flex-center">
-              <a class="fb-ic">
-                <i class="fa fa-bullhorn fa-lg text-white-50 mr-md-5 mx-4 fa-2x" />
-              </a>
+      <footer className="page-footer font-small purple darken-3 fixed-bottom text-center">
+        <div className="row">
+          <div className="col-md-12">
+            <div className="py-3 flex-center">
+              <Link to="/" className="fb-ic">
+                <i className="fa fa-bullhorn fa-lg text-white-50 mr-md-5 mx-4 fa-2x" />
+              </Link>
 
-              <a class="gplus-ic">
-                <i class="fa fa-search fa-lg text-white-50 mr-md-5 mx-4 fa-2x" />
-              </a>
-              <a class="li-ic">
-                <i class="fa fa-cog fa-lg text-white-50 mr-md-5 mx-4 fa-2x" />
-              </a>
-              <a class="tw-ic">
-                <i class="fa fa-info fa-lg text-white-50 mr-md-5 mx-4 fa-2x" />
-              </a>
-              <a class="li-ic" onClick={this.onLogout}>
-                <i class="fa fa-sign-out fa-lg text-white-50 mr-md-5 mx-4 fa-2x" />
-              </a>
+              <Link to="/" className="gplus-ic">
+                <i className="fa fa-search fa-lg text-white-50 mr-md-5 mx-4 fa-2x" />
+              </Link>
+              <Link to="/" className="li-ic">
+                <i className="fa fa-cog fa-lg text-white-50 mr-md-5 mx-4 fa-2x" />
+              </Link>
+              <Link to="/" className="tw-ic">
+                <i className="fa fa-info fa-lg text-white-50 mr-md-5 mx-4 fa-2x" />
+              </Link>
+              <Link to="/" className="li-ic" onClick={this.onLogout}>
+                <i className="fa fa-sign-out fa-lg text-white-50 mr-md-5 mx-4 fa-2x" />
+              </Link>
             </div>
           </div>
         </div>

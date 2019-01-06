@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -10,10 +9,11 @@ import LoginPage from "../LoginPage/LoginPage";
 import RegisterPage from "../RegisterPage/RegisterPage";
 import RegisterApplicant from "../RegisterPage/RegisterApplicant";
 import RegisterEmployer from "../RegisterPage/RegisterEmployer";
+import AddJobAdvertisementPage from "../AddJobAdvertisementPage/AddJobAdvertisement";
 
 class AppPage extends Component {
   render() {
-    const { isAuthenticated, user } = this.props.auth;
+    const { isAuthenticated } = this.props.auth;
 
     return (
       <Router>
@@ -21,7 +21,14 @@ class AppPage extends Component {
           {isAuthenticated ? (
             <React.Fragment>
               <NavPage />
-              <HomePage />
+              {/* <HomePage /> */}
+              <Route exact path="/" component={HomePage} />
+              <Route
+                exact
+                path="/advertisement/add"
+                component={AddJobAdvertisementPage}
+              />
+
               <FooterPage />
             </React.Fragment>
           ) : (

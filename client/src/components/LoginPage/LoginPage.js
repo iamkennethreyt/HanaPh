@@ -50,17 +50,17 @@ class Login extends Component {
   render() {
     const { errors } = this.state;
     return (
-      <div class="p-2 mt-5">
-        <div class="text-center text-black-50 ">
-          <h1 class="font-weight-bold">
-            <span class="purple-text">Hana</span>Ph
+      <div className="p-2 mt-5">
+        <div className="text-center text-black-50 ">
+          <h1 className="font-weight-bold">
+            <span className="purple-text">Hana</span>Ph
           </h1>
         </div>
         <form
-          class="text-center border border-light p-2"
+          className="text-center border border-light p-2"
           onSubmit={this.onSubmit}
         >
-          <p class="h4 mb-4">Sign in</p>
+          <p className="h4 mb-4">Sign in</p>
           <input
             type="text"
             className={classnames("form-control mt-2", {
@@ -91,7 +91,10 @@ class Login extends Component {
           <button className="btn purple btn-block mt-2" type="submit">
             Sign in
           </button>
-          <Link class="btn btn-outline-secondary btn-block mt-2" to="/register">
+          <Link
+            className="btn btn-outline-secondary btn-block mt-2"
+            to="/register"
+          >
             Register
           </Link>
         </form>
