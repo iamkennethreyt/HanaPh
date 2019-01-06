@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { GET_ERRORS, GET_ADS, POST_AD } from "./types";
+import { GET_ERRORS, GET_ADS, GET_AD, POST_AD } from "./types";
 
 //Register Employer
 export const postAd = (adsdata, history) => dispatch => {
@@ -33,6 +33,23 @@ export const getAds = () => dispatch => {
     .catch(err =>
       dispatch({
         type: GET_ADS,
+        payload: null
+      })
+    );
+};
+
+export const getAd = id => dispatch => {
+  axios
+    .get(`/api/advertisements/${id}`)
+    .then(res =>
+      dispatch({
+        type: GET_AD,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: GET_AD,
         payload: null
       })
     );

@@ -1,8 +1,8 @@
-import { GET_ADS, POST_AD } from "../actions/types";
+import { GET_ADS, POST_AD, GET_AD } from "../actions/types";
 
 const initialState = {
-  ads: []
-  //   adv: {}
+  ads: [],
+  adv: {}
 };
 
 export default function(state = initialState, action) {
@@ -16,6 +16,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         ads: action.payload
+      };
+    case GET_AD:
+      return {
+        ...state,
+        adv: action.payload
       };
 
     default:

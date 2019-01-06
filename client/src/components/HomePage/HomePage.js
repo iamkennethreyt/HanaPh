@@ -28,7 +28,7 @@ class HomePage extends Component {
                         <small>January 25, 2019</small>
                       </div>
                       <p className="mb-2">{add.details}</p>
-                      <small>SWULutions</small>
+                      <small>{add._id}</small>
                     </li>
                   );
                 })

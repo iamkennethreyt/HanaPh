@@ -6,9 +6,9 @@ import classnames from "classnames";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
-import { postAd } from "../../actions/adsActions";
+import { getAd } from "../../actions/adsActions";
 import { Link } from "react-router-dom";
-class AddJobAdvertisement extends Component {
+class EditJobAdvertisement extends Component {
   constructor() {
     super();
     this.state = {
@@ -19,37 +19,37 @@ class AddJobAdvertisement extends Component {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.errors) {
-      this.setState({ errors: nextProps.errors });
-    }
+  componentDidMount() {
+    this.props.getAd(this.props.match.params.id);
   }
 
-  onChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
-  };
+  //   onChange = e => {
+  //     this.setState({ [e.target.name]: e.target.value });
+  //   };
 
-  onChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
-  };
+  //   onChange = e => {
+  //     this.setState({ [e.target.name]: e.target.value });
+  //   };
 
-  onSubmit = e => {
-    e.preventDefault();
+  //   onSubmit = e => {
+  //     e.preventDefault();
 
-    const newJob = {
-      title: this.state.title,
-      details: this.state.details,
-      status: this.state.status
-    };
+  //     const newJob = {
+  //       title: this.state.title,
+  //       details: this.state.details,
+  //       status: this.state.status
+  //     };
 
-    this.props.postAd(newJob, this.props.history);
-  };
+  //     this.props.postAd(newJob, this.props.history);
+  //   };
 
   render() {
-    const { errors } = this.state;
+    // const { errors } = this.state;
+    // const { ads } = this.props.ads;
+    console.log(this.props.adv.ads);
     return (
       <div className="m-3 pt-5 ">
-        <form className="form" onSubmit={this.onSubmit}>
+        {/* <form className="form" onSubmit={this.onSubmit}>
           <input
             type="text"
             className={classnames("form-control mt-2", {
@@ -95,24 +95,21 @@ class AddJobAdvertisement extends Component {
           >
             Cancel
           </Link>
-        </form>
+        </form> */}
       </div>
     );
   }
 }
 
-AddJobAdvertisement.protoTypes = {
-  postAd: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired
+EditJobAdvertisement.protoTypes = {
+  getAd: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-  auth: state.auth,
-  errors: state.errors
+  adv: state
 });
 
 export default connect(
   mapStateToProps,
-  { postAd }
-)(withRouter(AddJobAdvertisement));
+  { getAd }
+)(withRouter(EditJobAdvertisement));

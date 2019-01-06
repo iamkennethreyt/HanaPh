@@ -10,6 +10,7 @@ import RegisterPage from "../RegisterPage/RegisterPage";
 import RegisterApplicant from "../RegisterPage/RegisterApplicant";
 import RegisterEmployer from "../RegisterPage/RegisterEmployer";
 import AddJobAdvertisementPage from "../AddJobAdvertisementPage/AddJobAdvertisement";
+import EditJobAdvertisement from "../EditJobAdvertisement/EditJobAdvertisement";
 
 class AppPage extends Component {
   render() {
@@ -27,6 +28,12 @@ class AppPage extends Component {
                 exact
                 path="/advertisement/add"
                 component={AddJobAdvertisementPage}
+              />
+
+              <Route
+                exact
+                path="/advertisement/:id"
+                component={EditJobAdvertisement}
               />
 
               <FooterPage />
