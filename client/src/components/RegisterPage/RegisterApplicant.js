@@ -47,7 +47,8 @@ class RegisterApplicant extends Component {
       contactInfo: this.state.contactInfo,
       cityProvince: this.state.cityProvince,
       password: this.state.password,
-      password2: this.state.password2
+      password2: this.state.password2,
+      type: "applicant"
     };
 
     this.props.registerApplicant(newUser, this.props.history);

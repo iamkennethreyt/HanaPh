@@ -15,51 +15,10 @@ const validateAccountSettingsPasswordInput = require("../../validations/accountS
 //load User model
 const User = require("../../models/User");
 
-router.get("/test", (req, res) => res.json({ name: "hello world" }));
-
-//@route    POST api/users/register/applicant
+//@route    POST api/users/register
 //@desc     register new user
 //@access   public
-router.post("/register/applicant", (req, res) => {
-  const { errors, isValid } = ValidateRegisterInput(req.body);
-
-  //check validation
-  if (!isValid) {
-    return res.status(400).json(errors);
-  }
-
-  User.findOne({ email: req.body.email }).then(user => {
-    errors.email = "Email already exists";
-    if (user) {
-      return res.status(400).json(errors);
-    } else {
-      const newUSer = new User({
-        name: req.body.name,
-        email: req.body.email,
-        password: req.body.password,
-        contactInfo: req.body.contactInfo,
-        cityProvince: req.body.cityProvince,
-        type: "applicant"
-      });
-
-      bcrypt.genSalt(10, (err, salt) => {
-        bcrypt.hash(newUSer.password, salt, (err, hash) => {
-          if (err) throw err;
-          newUSer.password = hash;
-          newUSer
-            .save()
-            .then(user => res.json(user))
-            .catch(err => console.log(err));
-        });
-      });
-    }
-  });
-});
-
-//@route    POST api/users/register/employer
-//@desc     register new user
-//@access   public
-router.post("/register/employer", (req, res) => {
+router.post("/register", (req, res) => {
   const { errors, isValid } = ValidateRegisterInput(req.body);
 
   //check validation
@@ -80,7 +39,7 @@ router.post("/register/employer", (req, res) => {
         cityProvince: req.body.cityProvince,
         details: req.body.details,
         completeAddress: req.body.completeAddress,
-        type: "employer"
+        type: req.body.type
       });
 
       bcrypt.genSalt(10, (err, salt) => {
@@ -133,7 +92,7 @@ router.post("/login", (req, res) => {
         };
 
         //sign token
-        jwt.sign(payload, key, { expiresIn: 3600 }, (err, token) => {
+        jwt.sign(payload, key, (err, token) => {
           res.json({
             token: "Bearer " + token
           });
@@ -146,7 +105,34 @@ router.post("/login", (req, res) => {
   });
 });
 
-//@route    PUT api/users/accountsettings
+// @route   GET api/users/
+// @desc    Show all users
+// @access  Public
+router.get("/", (req, res) => {
+  User.find()
+    .sort({ date: -1 })
+    .then(users => res.json(users))
+    .catch(err => res.status(404).json({ nousersfound: "No users found" }));
+});
+
+// @route   GET api/users/:id
+// @desc    Show single user based on the params id
+// @access  Public
+router.get("/:id", (req, res) => {
+  User.findById(req.params.id)
+    .then(adv => {
+      if (adv) {
+        res.json(adv);
+      } else {
+        res.status(404).json({ noadvfound: "No User found with that ID" });
+      }
+    })
+    .catch(err =>
+      res.status(404).json({ noadvfound: "No User found with that ID" })
+    );
+});
+
+//@route    PUT api/users/accountsettings/password
 //@desc     account settings change password
 //@access   private
 router.put(
@@ -188,17 +174,13 @@ router.put(
   }
 );
 
+//@route    PUT api/users/accountsettings
+//@desc     account settings of the current logged in user
+//@access   private
 router.put(
   "/accountsettings",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    // const { errors, isValid } = ValidateRegisterInput(req.body);
-
-    // //check validation
-    // if (!isValid) {
-    //   return res.status(400).json(errors);
-    // }
-
     const userFields = {};
 
     if (req.body.name) userFields.name = req.body.name;

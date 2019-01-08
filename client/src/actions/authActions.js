@@ -7,7 +7,7 @@ import { GET_ERRORS, SET_CURRENT_USER } from "./types";
 //Register Applicant
 export const registerApplicant = (userdata, history) => dispatch => {
   axios
-    .post("/api/users/register/applicant", userdata)
+    .post("/api/users/register", userdata)
     .then(res => history.push("/"))
     .catch(err =>
       dispatch({
@@ -20,7 +20,7 @@ export const registerApplicant = (userdata, history) => dispatch => {
 //Register Employer
 export const registerEmployer = (userdata, history) => dispatch => {
   axios
-    .post("/api/users/register/employer", userdata)
+    .post("/api/users/register", userdata)
     .then(res => history.push("/"))
     .catch(err =>
       dispatch({

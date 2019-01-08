@@ -15,6 +15,22 @@ const AdvertisementSchema = new Schema({
     type: String,
     required: true
   },
+  applicants: [
+    {
+      user: {
+        type: Schema.Types.ObjectId,
+        ref: "users",
+        required: true
+      },
+      message: {
+        type: String
+      },
+      date: {
+        type: Date,
+        default: Date.now
+      }
+    }
+  ],
   status: {
     type: Boolean,
     default: true

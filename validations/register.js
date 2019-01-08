@@ -6,10 +6,15 @@ module.exports = function validateRegisterInput(data) {
 
   data.name = !isEmpty(data.name) ? data.name : "";
   data.email = !isEmpty(data.email) ? data.email : "";
+  data.type = !isEmpty(data.type) ? data.type : "";
   data.contactInfo = !isEmpty(data.contactInfo) ? data.contactInfo : "";
   data.cityProvince = !isEmpty(data.cityProvince) ? data.cityProvince : "";
   data.password = !isEmpty(data.password) ? data.password : "";
   data.password2 = !isEmpty(data.password2) ? data.password2 : "";
+
+  if (validator.isEmpty(data.type)) {
+    errors.type = "Type info field is required";
+  }
 
   if (!validator.equals(data.password2, data.password)) {
     errors.password2 = "password must match";

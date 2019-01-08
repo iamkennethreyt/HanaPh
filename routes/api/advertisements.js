@@ -9,14 +9,18 @@ const Advertisement = require("../../models/Advertisement");
 // Validation
 const validateAdvertisementInput = require("../../validations/advertisement");
 
-// @route   GET api/posts
-// @desc    Get posts
+// @route   GET api/advertisements
+// @desc    Get advertisements
 // @access  Public
 router.get("/", (req, res) => {
   Advertisement.find()
+    .populate("user")
+    .populate("applicants.user")
     .sort({ date: -1 })
-    .then(posts => res.json(posts))
-    .catch(err => res.status(404).json({ nopostsfound: "No posts found" }));
+    .then(ads => res.json(ads))
+    .catch(err =>
+      res.status(404).json({ noadvertisementsfound: "No advertisements found" })
+    );
 });
 
 // @route   GET api/advertisements/:id
@@ -24,6 +28,8 @@ router.get("/", (req, res) => {
 // @access  Public
 router.get("/:id", (req, res) => {
   Advertisement.findById(req.params.id)
+    .populate("user")
+    .populate("applicants.user")
     .then(adv => {
       if (adv) {
         res.json(adv);
@@ -41,7 +47,7 @@ router.get("/:id", (req, res) => {
 });
 
 // @route   POST /api/advertisements
-// @desc    Create post
+// @desc    Create advertisement
 // @access  Private
 router.post(
   "/",
@@ -66,7 +72,7 @@ router.post(
 );
 
 // @route   PUT api/advertisements/:id
-// @desc    Edit advertisment
+// @desc    Edit advertisement
 // @access  Private
 router.put(
   "/:id",
@@ -111,6 +117,24 @@ router.delete(
           .status(404)
           .json({ unabletodelete: "deleting the data not successfully" })
       );
+  }
+);
+
+// @route   PUT api/advertisements/:id
+// @desc    submit application in current advertisement based on the params id
+// @access  Private
+router.put(
+  "/apply/:id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Advertisement.findOne({ _id: req.params.id }).then(ads => {
+      const newApplicant = {
+        user: req.user.id,
+        message: req.body.message
+      };
+      ads.applicants.unshift(newApplicant);
+      ads.save().then(ads => res.json(ads));
+    });
   }
 );
 
