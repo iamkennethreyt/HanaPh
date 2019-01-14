@@ -11,6 +11,8 @@ import RegisterApplicant from "../RegisterPage/RegisterApplicant";
 import RegisterEmployer from "../RegisterPage/RegisterEmployer";
 import AddJobAdvertisementPage from "../AddJobAdvertisementPage/AddJobAdvertisement";
 import EditJobAdvertisement from "../EditJobAdvertisement/EditJobAdvertisement";
+import SettingsPage from "../SettingsPage/SettiingsPage";
+import PasswordSettingsPage from "../SettingsPage/PasswordSettingsPage";
 
 class AppPage extends Component {
   render() {
@@ -32,8 +34,15 @@ class AppPage extends Component {
 
               <Route
                 exact
-                path="/advertisement/:id"
+                path="/advertisement/edit/:id"
                 component={EditJobAdvertisement}
+              />
+
+              <Route exact path="/settings" component={SettingsPage} />
+              <Route
+                exact
+                path="/settings/password"
+                component={PasswordSettingsPage}
               />
 
               <FooterPage />

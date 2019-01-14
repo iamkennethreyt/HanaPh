@@ -6,15 +6,17 @@ import classnames from "classnames";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
-import { getAd } from "../../actions/adsActions";
+import { getAd, updateAdd } from "../../actions/adsActions";
 import { Link } from "react-router-dom";
-class EditJobAdvertisement extends Component {
+
+class AddJobAdvertisement extends Component {
   constructor() {
     super();
     this.state = {
+      _id: "",
       title: "",
       details: "",
-      status: true,
+      status: false,
       errors: {}
     };
   }
@@ -23,33 +25,47 @@ class EditJobAdvertisement extends Component {
     this.props.getAd(this.props.match.params.id);
   }
 
-  //   onChange = e => {
-  //     this.setState({ [e.target.name]: e.target.value });
-  //   };
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors });
+    }
+    if (nextProps.adv) {
+      const { details, status, title, _id } = nextProps.adv;
+      this.setState({
+        _id,
+        details,
+        status,
+        title
+      });
+    }
+  }
 
-  //   onChange = e => {
-  //     this.setState({ [e.target.name]: e.target.value });
-  //   };
+  onChange = e => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
 
-  //   onSubmit = e => {
-  //     e.preventDefault();
+  onChange = e => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
 
-  //     const newJob = {
-  //       title: this.state.title,
-  //       details: this.state.details,
-  //       status: this.state.status
-  //     };
+  onSubmit = e => {
+    e.preventDefault();
+    const data = {
+      _id: this.state._id,
+      title: this.state.title,
+      details: this.state.details,
+      status: this.state.status
+    };
 
-  //     this.props.postAd(newJob, this.props.history);
-  //   };
+    this.props.updateAdd(data, this.props.history);
+  };
 
   render() {
-    // const { errors } = this.state;
-    // const { ads } = this.props.ads;
-    console.log(this.props.adv.ads);
+    const { errors, status } = this.state;
+    console.log(status);
     return (
       <div className="m-3 pt-5 ">
-        {/* <form className="form" onSubmit={this.onSubmit}>
+        <form className="form" onSubmit={this.onSubmit}>
           <input
             type="text"
             className={classnames("form-control mt-2", {
@@ -78,11 +94,19 @@ class EditJobAdvertisement extends Component {
           )}
 
           <div className="d-flex justify-content-between">
-            <label className="mt-2 mb-0 bs-switch ">
-              <input type="checkbox" />
-              <span className="slider  purple darken-3 round" />
-            </label>
-            <span className="mt-3 mb-0">Status(Active)</span>
+            <div className="custom-control custom-checkbox">
+              <input
+                type="checkbox"
+                name="status"
+                className="custom-control-input"
+                id="defaultChecked2"
+                defaultValue={this.state.status}
+                defaultChecked={this.state.status}
+              />
+              <label className="custom-control-label" htmlFor="defaultChecked2">
+                Status
+              </label>
+            </div>
           </div>
           <input
             type="submit"
@@ -95,21 +119,27 @@ class EditJobAdvertisement extends Component {
           >
             Cancel
           </Link>
-        </form> */}
+        </form>
       </div>
     );
   }
 }
 
-EditJobAdvertisement.protoTypes = {
-  getAd: PropTypes.func.isRequired
+AddJobAdvertisement.protoTypes = {
+  updateAdd: PropTypes.func.isRequired,
+  getAd: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired,
+  adv: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  adv: state
+  auth: state.auth,
+  errors: state.errors,
+  adv: state.ads.adv
 });
 
 export default connect(
   mapStateToProps,
-  { getAd }
-)(withRouter(EditJobAdvertisement));
+  { getAd, updateAdd }
+)(withRouter(AddJobAdvertisement));

@@ -2,7 +2,7 @@ import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
 
-import { GET_ERRORS, SET_CURRENT_USER } from "./types";
+import { GET_ERRORS, SET_CURRENT_USER, GET_CURRENT_USER } from "./types";
 
 //Register Applicant
 export const registerApplicant = (userdata, history) => dispatch => {
@@ -58,12 +58,16 @@ export const loginUser = userdata => dispatch => {
     );
 };
 
-//Change password
-export const changePassword = (userdata, history) => dispatch => {
+//get current
+export const getCurrentUser = () => dispatch => {
   axios
-    .post("/api/users/accountsettings", userdata)
-    .then(() => history.push("/"))
-    .then(() => alert("SUCCESSFULLY CHANGED THE PASSWORD"))
+    .get("/api/users/login")
+    .then(res => {
+      dispatch({
+        type: GET_CURRENT_USER,
+        payload: res.data
+      });
+    })
     .catch(err =>
       dispatch({
         type: GET_ERRORS,

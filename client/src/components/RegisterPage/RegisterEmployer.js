@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import classnames from "classnames";
 
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 
 import { registerEmployer } from "../../actions/authActions";
 
@@ -108,19 +108,30 @@ class RegisterEmployer extends Component {
             <div className="invalid-feedback">{errors.contactInfo}</div>
           )}
 
-          <input
-            type="text"
-            className={classnames("form-control mt-2", {
-              "is-invalid": errors.cityProvince
-            })}
-            placeholder="City Province"
-            name="cityProvince"
-            value={this.state.cityProvince}
-            onChange={this.onChange}
-          />
-          {errors.cityProvince && (
-            <div className="invalid-feedback">{errors.cityProvince}</div>
-          )}
+          <div className="form-group">
+            <label htmlFor="cityProvince">City/Province</label>
+            <select
+              id="cityProvince"
+              className={classnames("form-control form-control-lg", {
+                "is-invalid": errors.cityProvince
+              })}
+              name="cityProvince"
+              value={this.state.cityProvince}
+              onChange={this.onChange}
+            >
+              <option hidden>City/Province</option>
+              {["Cebu", "Bohol", "Samar", "Leyte", "Manila", "davao"].map(
+                option => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                )
+              )}
+            </select>
+            {errors.cityProvince && (
+              <div className="invalid-feedback">{errors.cityProvince}</div>
+            )}
+          </div>
           <hr />
 
           <input
@@ -157,9 +168,12 @@ class RegisterEmployer extends Component {
             Save
           </button>
 
-          <button className="btn btn-block mt-2 btn-outline-secondary waves-effect">
+          <Link
+            to="/register"
+            className="btn btn-block mt-2 btn-outline-secondary waves-effect"
+          >
             Cancel
-          </button>
+          </Link>
         </form>
       </div>
     );

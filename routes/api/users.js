@@ -108,7 +108,20 @@ router.post("/login", (req, res) => {
 // @route   GET api/users/
 // @desc    Show all users
 // @access  Public
-router.get("/", (req, res) => {
+router.get(
+  "/current",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    User.findOne({ _id: req.user.id })
+      .then(users => res.json(users))
+      .catch(err => res.status(404).json({ nousersfound: "No users found" }));
+  }
+);
+
+// @route   GET api/users/
+// @desc    Show all users
+// @access  Public
+router.get("/all", (req, res) => {
   User.find()
     .sort({ date: -1 })
     .then(users => res.json(users))
@@ -118,7 +131,7 @@ router.get("/", (req, res) => {
 // @route   GET api/users/:id
 // @desc    Show single user based on the params id
 // @access  Public
-router.get("/:id", (req, res) => {
+router.get("/id/:id", (req, res) => {
   User.findById(req.params.id)
     .then(adv => {
       if (adv) {

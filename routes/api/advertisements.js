@@ -10,41 +10,70 @@ const Advertisement = require("../../models/Advertisement");
 const validateAdvertisementInput = require("../../validations/advertisement");
 
 // @route   GET api/advertisements
-// @desc    Get advertisements
+// @desc    Show all advertisements which the status is true
 // @access  Public
-router.get("/", (req, res) => {
-  Advertisement.find()
-    .populate("user")
-    .populate("applicants.user")
-    .sort({ date: -1 })
-    .then(ads => res.json(ads))
-    .catch(err =>
-      res.status(404).json({ noadvertisementsfound: "No advertisements found" })
-    );
-});
+router.get(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Advertisement.find()
+      .populate("user")
+      .sort({ date: -1 })
+      .then(ads => res.json(ads))
+      .catch(err =>
+        res
+          .status(404)
+          .json({ noadvertisementsfound: "No advertisements found" })
+      );
+  }
+);
+
+// @route   GET api/advertisements
+// @desc    Show all advertisemtns where the advertisment user is equals to the login user
+// @access  Public
+router.get(
+  "/owner",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Advertisement.find({ user: req.user.id })
+      .populate("user")
+      .populate("applicants.user")
+      .sort({ date: -1 })
+      .then(ads => res.json(ads))
+      .catch(err =>
+        res
+          .status(404)
+          .json({ noadvertisementsfound: "No advertisements found" })
+      );
+  }
+);
 
 // @route   GET api/advertisements/:id
 // @desc    Get Advertisement by id
 // @access  Public
-router.get("/:id", (req, res) => {
-  Advertisement.findById(req.params.id)
-    .populate("user")
-    .populate("applicants.user")
-    .then(adv => {
-      if (adv) {
-        res.json(adv);
-      } else {
+router.get(
+  "/id/:id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Advertisement.findById(req.params.id)
+      .populate("user")
+      .populate("applicants.user")
+      .then(adv => {
+        if (adv) {
+          res.json(adv);
+        } else {
+          res
+            .status(404)
+            .json({ noadvfound: "No Advertisement found with that ID" });
+        }
+      })
+      .catch(err =>
         res
           .status(404)
-          .json({ noadvfound: "No Advertisement found with that ID" });
-      }
-    })
-    .catch(err =>
-      res
-        .status(404)
-        .json({ noadvfound: "No Advertisement found with that ID" })
-    );
-});
+          .json({ noadvfound: "No Advertisement found with that ID" })
+      );
+  }
+);
 
 // @route   POST /api/advertisements
 // @desc    Create advertisement
@@ -75,7 +104,7 @@ router.post(
 // @desc    Edit advertisement
 // @access  Private
 router.put(
-  "/:id",
+  "/edit/:id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     const { errors, isValid } = validateAdvertisementInput(req.body);

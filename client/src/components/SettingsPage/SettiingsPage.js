@@ -6,7 +6,7 @@ import classnames from "classnames";
 import { connect } from "react-redux";
 import { withRouter, Link } from "react-router-dom";
 
-import { registerApplicant } from "../../actions/authActions";
+import { getCurrentUser, updateCurrentUser } from "../../actions/usersActions";
 
 class RegisterApplicant extends Component {
   constructor() {
@@ -16,21 +16,28 @@ class RegisterApplicant extends Component {
       email: "",
       contactInfo: "",
       cityProvince: "",
-      password: "",
-      password2: "",
       errors: {}
     };
   }
 
   componentDidMount() {
-    if (this.props.auth.isAuthenticated) {
-      this.props.history.push("/");
-    }
+    this.props.getCurrentUser();
+    // console.log("current", this.props.currentUser);
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
+    }
+
+    if (nextProps.currentUser) {
+      const { name, email, contactInfo, cityProvince } = nextProps.currentUser;
+      this.setState({
+        name,
+        email,
+        contactInfo,
+        cityProvince
+      });
     }
   }
 
@@ -41,29 +48,21 @@ class RegisterApplicant extends Component {
   onSubmit = e => {
     e.preventDefault();
 
-    const newUser = {
+    const data = {
       name: this.state.name,
       email: this.state.email,
       contactInfo: this.state.contactInfo,
-      cityProvince: this.state.cityProvince,
-      password: this.state.password,
-      password2: this.state.password2,
-      type: "applicant"
+      cityProvince: this.state.cityProvince
     };
 
-    this.props.registerApplicant(newUser, this.props.history);
+    this.props.updateCurrentUser(data, this.props.history);
   };
   render() {
     const { errors } = this.state;
     return (
       <div className="p-2 mt-5">
-        <div className="text-center text-black-50 ">
-          <h1 className="font-weight-bold">
-            <span className="purple-text">Hana</span>Ph
-          </h1>
-        </div>
         <form className="border border-light p-2" onSubmit={this.onSubmit}>
-          <p className="h4 mb-4">Sign up as Applicant</p>
+          <p className="h4 mb-4">Account Settings</p>
 
           <input
             type="text"
@@ -104,8 +103,7 @@ class RegisterApplicant extends Component {
           {errors.contactInfo && (
             <div className="invalid-feedback">{errors.contactInfo}</div>
           )}
-          <div className="form-group">
-            <label htmlFor="cityProvince">City/Province</label>
+          <div className="form-group mt-2">
             <select
               id="cityProvince"
               className={classnames("form-control form-control-lg", {
@@ -129,35 +127,6 @@ class RegisterApplicant extends Component {
             )}
           </div>
 
-          <hr />
-
-          <input
-            type="password"
-            className={classnames("form-control mt-2", {
-              "is-invalid": errors.password
-            })}
-            placeholder="Password"
-            name="password"
-            value={this.state.password}
-            onChange={this.onChange}
-          />
-          {errors.password && (
-            <div className="invalid-feedback">{errors.password}</div>
-          )}
-          <input
-            type="password"
-            className={classnames("form-control mt-2", {
-              "is-invalid": errors.password2
-            })}
-            placeholder="Confirm password"
-            name="password2"
-            value={this.state.password2}
-            onChange={this.onChange}
-          />
-          {errors.password2 && (
-            <div className="invalid-feedback">{errors.password2}</div>
-          )}
-
           <button
             type="submit"
             className="btn btn-block mt-2 purple darken-3  waves-effect"
@@ -166,10 +135,17 @@ class RegisterApplicant extends Component {
           </button>
 
           <Link
-            to="/register"
+            to="/"
             className="btn btn-block mt-2 btn-outline-secondary waves-effect"
           >
             Cancel
+          </Link>
+
+          <Link
+            to="/settings/password"
+            className="btn btn-block mt-2 purple darken-3 waves-effect"
+          >
+            Password Settings
           </Link>
         </form>
       </div>
@@ -178,17 +154,20 @@ class RegisterApplicant extends Component {
 }
 
 RegisterApplicant.protoTypes = {
-  registerUser: PropTypes.func.isRequired,
+  getCurrentUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired
+  errors: PropTypes.object.isRequired,
+  currentUser: PropTypes.object.isRequired,
+  updateCurrentUser: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  errors: state.errors
+  errors: state.errors,
+  currentUser: state.users.currentUser
 });
 
 export default connect(
   mapStateToProps,
-  { registerApplicant }
+  { getCurrentUser, updateCurrentUser }
 )(withRouter(RegisterApplicant));

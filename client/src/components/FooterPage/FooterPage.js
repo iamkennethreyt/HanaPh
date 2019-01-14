@@ -24,7 +24,7 @@ class FooterPage extends Component {
               <Link to="/" className="gplus-ic">
                 <i className="fa fa-search fa-lg text-white-50 mr-md-5 mx-4 fa-2x" />
               </Link>
-              <Link to="/" className="li-ic">
+              <Link to="/settings" className="li-ic">
                 <i className="fa fa-cog fa-lg text-white-50 mr-md-5 mx-4 fa-2x" />
               </Link>
               <Link to="/" className="tw-ic">

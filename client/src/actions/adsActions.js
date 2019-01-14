@@ -40,13 +40,27 @@ export const getAds = () => dispatch => {
 
 export const getAd = id => dispatch => {
   axios
-    .get(`/api/advertisements/${id}`)
+    .get(`/api/advertisements/id/${id}`)
     .then(res =>
       dispatch({
         type: GET_AD,
         payload: res.data
       })
     )
+    .catch(err =>
+      dispatch({
+        type: GET_AD,
+        payload: null
+      })
+    );
+};
+
+export const updateAdd = (data, history) => dispatch => {
+  axios
+    .put(`/api/advertisements/edit/${data._id}`, data)
+    .then(() => {
+      history.push("/");
+    })
     .catch(err =>
       dispatch({
         type: GET_AD,
