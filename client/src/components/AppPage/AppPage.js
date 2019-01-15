@@ -13,6 +13,7 @@ import AddJobAdvertisementPage from "../AddJobAdvertisementPage/AddJobAdvertisem
 import EditJobAdvertisement from "../EditJobAdvertisement/EditJobAdvertisement";
 import SettingsPage from "../SettingsPage/SettiingsPage";
 import PasswordSettingsPage from "../SettingsPage/PasswordSettingsPage";
+import ViewJobAdvertisement from "../ViewJobAdvertisement/ViewJobAdvertisement";
 
 class AppPage extends Component {
   render() {
@@ -36,6 +37,12 @@ class AppPage extends Component {
                 exact
                 path="/advertisement/edit/:id"
                 component={EditJobAdvertisement}
+              />
+
+              <Route
+                exact
+                path="/advertisement/view/:id"
+                component={ViewJobAdvertisement}
               />
 
               <Route exact path="/settings" component={SettingsPage} />

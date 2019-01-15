@@ -16,13 +16,17 @@ class RegisterApplicant extends Component {
       email: "",
       contactInfo: "",
       cityProvince: "",
+      completeAddress: "",
+      details: "",
       errors: {}
     };
   }
 
   componentDidMount() {
     this.props.getCurrentUser();
-    // console.log("current", this.props.currentUser);
+    if (!this.props.auth.isAuthenticated) {
+      this.props.history.push("/");
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -31,12 +35,21 @@ class RegisterApplicant extends Component {
     }
 
     if (nextProps.currentUser) {
-      const { name, email, contactInfo, cityProvince } = nextProps.currentUser;
+      const {
+        name,
+        email,
+        contactInfo,
+        cityProvince,
+        completeAddress,
+        details
+      } = nextProps.currentUser;
       this.setState({
         name,
         email,
         contactInfo,
-        cityProvince
+        cityProvince,
+        completeAddress,
+        details
       });
     }
   }
@@ -52,7 +65,9 @@ class RegisterApplicant extends Component {
       name: this.state.name,
       email: this.state.email,
       contactInfo: this.state.contactInfo,
-      cityProvince: this.state.cityProvince
+      cityProvince: this.state.cityProvince,
+      completeAddress: this.state.completeAddress,
+      details: this.state.details
     };
 
     this.props.updateCurrentUser(data, this.props.history);
@@ -64,17 +79,29 @@ class RegisterApplicant extends Component {
         <form className="border border-light p-2" onSubmit={this.onSubmit}>
           <p className="h4 mb-4">Account Settings</p>
 
-          <input
-            type="text"
-            className={classnames("form-control mt-2", {
-              "is-invalid": errors.name
-            })}
-            placeholder="Full name"
-            name="name"
-            value={this.state.name}
-            onChange={this.onChange}
-          />
-          {errors.name && <div className="invalid-feedback">{errors.name}</div>}
+          {this.props.auth.user.type === "Applicant" ? (
+            <input
+              type="text"
+              className={classnames("form-control mt-2", {
+                "is-invalid": errors.name
+              })}
+              placeholder="Full name"
+              name="name"
+              value={this.state.name}
+              onChange={this.onChange}
+            />
+          ) : (
+            <input
+              type="text"
+              className={classnames("form-control mt-2", {
+                "is-invalid": errors.name
+              })}
+              placeholder="Company Name"
+              name="name"
+              value={this.state.name}
+              onChange={this.onChange}
+            />
+          )}
 
           <input
             type="email"
@@ -86,9 +113,6 @@ class RegisterApplicant extends Component {
             value={this.state.email}
             onChange={this.onChange}
           />
-          {errors.email && (
-            <div className="invalid-feedback">{errors.email}</div>
-          )}
 
           <input
             type="text"
@@ -100,9 +124,7 @@ class RegisterApplicant extends Component {
             value={this.state.contactInfo}
             onChange={this.onChange}
           />
-          {errors.contactInfo && (
-            <div className="invalid-feedback">{errors.contactInfo}</div>
-          )}
+
           <div className="form-group mt-2">
             <select
               id="cityProvince"
@@ -122,10 +144,43 @@ class RegisterApplicant extends Component {
                 )
               )}
             </select>
-            {errors.cityProvince && (
-              <div className="invalid-feedback">{errors.cityProvince}</div>
-            )}
           </div>
+
+          {this.props.auth.user.type === "applicant" ? (
+            <textarea
+              rows="3"
+              placeholder="Complete address"
+              className={classnames("form-control mt-2", {
+                "is-invalid": errors.completeAddress
+              })}
+              name="completeAddress"
+              value={this.state.completeAddress}
+              onChange={this.onChange}
+            />
+          ) : (
+            <div>
+              <textarea
+                rows="3"
+                placeholder="Company complete address"
+                className={classnames("form-control mt-2", {
+                  "is-invalid": errors.completeAddress
+                })}
+                name="completeAddress"
+                value={this.state.completeAddress}
+                onChange={this.onChange}
+              />
+              <textarea
+                rows="3"
+                placeholder="Company Details"
+                className={classnames("form-control mt-2", {
+                  "is-invalid": errors.details
+                })}
+                name="details"
+                value={this.state.details}
+                onChange={this.onChange}
+              />
+            </div>
+          )}
 
           <button
             type="submit"

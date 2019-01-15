@@ -104,8 +104,7 @@ class RegisterApplicant extends Component {
           {errors.contactInfo && (
             <div className="invalid-feedback">{errors.contactInfo}</div>
           )}
-          <div className="form-group">
-            <label htmlFor="cityProvince">City/Province</label>
+          <div className="form-group mt-2">
             <select
               id="cityProvince"
               className={classnames("form-control form-control-lg", {

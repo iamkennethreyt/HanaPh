@@ -93,6 +93,7 @@ router.post(
     const newAdv = new Advertisement({
       title: req.body.title,
       details: req.body.details,
+      category: req.body.category,
       user: req.user.id
     });
 
@@ -120,32 +121,13 @@ router.put(
     if (req.body.title) advFields.title = req.body.title;
     if (req.body.details) advFields.details = req.body.details;
     if (req.body.status) advFields.status = req.body.status;
+    if (req.body.category) advFields.category = req.body.category;
 
     Advertisement.findOneAndUpdate(
       { user: req.user.id },
       { $set: advFields },
       { new: true }
     ).then(adv => res.json(adv));
-  }
-);
-
-// @route   DELETE api/advertisements/:id
-// @desc    Delete advertisment
-// @access  Private
-router.delete(
-  "/:id",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    Advertisement.find({ user: req.user.id })
-      .deleteOne({
-        _id: req.params.id
-      })
-      .then(() => res.json({ success: "Succesfully Deleted" }))
-      .catch(err =>
-        res
-          .status(404)
-          .json({ unabletodelete: "deleting the data not successfully" })
-      );
   }
 );
 
@@ -164,6 +146,21 @@ router.put(
       ads.applicants.unshift(newApplicant);
       ads.save().then(ads => res.json(ads));
     });
+  }
+);
+
+//@route    DELETE api/section/:id
+//@desc     Remove single section based on the params id
+//@access   private
+router.delete(
+  "/:id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const errors = {};
+
+    Advertisement.findOneAndDelete({ _id: req.params.id }).then(rmv =>
+      res.json(rmv)
+    );
   }
 );
 

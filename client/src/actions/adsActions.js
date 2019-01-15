@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { GET_ERRORS, GET_ADS, GET_AD, POST_AD } from "./types";
+import { GET_ERRORS, GET_ADS, GET_AD, POST_AD, DELETE_AD } from "./types";
 
 //Register Employer
 export const postAd = (adsdata, history) => dispatch => {
@@ -65,6 +65,37 @@ export const updateAdd = (data, history) => dispatch => {
       dispatch({
         type: GET_AD,
         payload: null
+      })
+    );
+};
+
+export const deleteAd = id => dispatch => {
+  axios
+    .delete(`/api/advertisements/${id}`)
+    .then(res => {
+      dispatch({
+        type: DELETE_AD,
+        payload: res.data
+      });
+    })
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
+export const submitApplication = id => dispatch => {
+  axios
+    .put(`/api/advertisements/apply/${id}`)
+    .then(res => {
+      console.log(res.data);
+    })
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
       })
     );
 };

@@ -12,6 +12,7 @@ class AddJobAdvertisement extends Component {
   constructor() {
     super();
     this.state = {
+      category: "",
       title: "",
       details: "",
       status: true,
@@ -39,9 +40,11 @@ class AddJobAdvertisement extends Component {
     const newJob = {
       title: this.state.title,
       details: this.state.details,
-      status: this.state.status
+      status: this.state.status,
+      category: this.state.category
     };
 
+    // console.log(newJob);
     this.props.postAd(newJob, this.props.history);
   };
 
@@ -64,7 +67,7 @@ class AddJobAdvertisement extends Component {
             <div className="invalid-feedback">{errors.title}</div>
           )}
           <textarea
-            rows="2"
+            rows="3"
             placeholder="Job Descriptions"
             className={classnames("form-control mt-2", {
               "is-invalid": errors.details
@@ -77,13 +80,30 @@ class AddJobAdvertisement extends Component {
             <div className="invalid-feedback">{errors.details}</div>
           )}
 
-          <div className="d-flex justify-content-between">
-            <label className="mt-2 mb-0 bs-switch ">
-              <input type="checkbox" />
-              <span className="slider  purple darken-3 round" />
-            </label>
-            <span className="mt-3 mb-0">Status(Active)</span>
+          <div className="form-group mt-2">
+            <select
+              id="category"
+              className={classnames("form-control form-control-lg", {
+                "is-invalid": errors.category
+              })}
+              name="category"
+              value={this.state.category}
+              onChange={this.onChange}
+            >
+              <option hidden>Categories</option>
+              {["Accounting/Finance", "Call Center", "Computer/IT"].map(
+                option => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                )
+              )}
+            </select>
+            {errors.category && (
+              <div className="invalid-feedback">{errors.category}</div>
+            )}
           </div>
+
           <input
             type="submit"
             className="btn btn-block mt-2 purple darken-3  waves-effect"

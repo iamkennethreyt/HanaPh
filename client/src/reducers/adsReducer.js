@@ -1,4 +1,4 @@
-import { GET_ADS, POST_AD, GET_AD } from "../actions/types";
+import { GET_ADS, POST_AD, GET_AD, DELETE_AD } from "../actions/types";
 
 const initialState = {
   ads: [],
@@ -21,6 +21,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         adv: action.payload
+      };
+    case DELETE_AD:
+      return {
+        ...state,
+        ads: state.ads.filter(ad => ad._id !== action.payload._id)
       };
 
     default:

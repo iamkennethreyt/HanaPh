@@ -37,8 +37,6 @@ router.post("/register", (req, res) => {
         password: req.body.password,
         contactInfo: req.body.contactInfo,
         cityProvince: req.body.cityProvince,
-        details: req.body.details,
-        completeAddress: req.body.completeAddress,
         type: req.body.type
       });
 
@@ -200,6 +198,9 @@ router.put(
     if (req.body.email) userFields.email = req.body.email;
     if (req.body.details) userFields.details = req.body.details;
     if (req.body.contactInfo) userFields.contactInfo = req.body.contactInfo;
+    if (req.body.completeAddress)
+      userFields.completeAddress = req.body.completeAddress;
+    if (req.body.details) userFields.details = req.body.details;
     if (req.body.cityProvince) userFields.cityProvince = req.body.cityProvince;
 
     User.findOneAndUpdate(

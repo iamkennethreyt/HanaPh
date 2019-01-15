@@ -17,6 +17,7 @@ class AddJobAdvertisement extends Component {
       title: "",
       details: "",
       status: false,
+      category: "",
       errors: {}
     };
   }
@@ -30,19 +31,16 @@ class AddJobAdvertisement extends Component {
       this.setState({ errors: nextProps.errors });
     }
     if (nextProps.adv) {
-      const { details, status, title, _id } = nextProps.adv;
+      const { details, status, title, _id, category } = nextProps.adv;
       this.setState({
         _id,
         details,
         status,
-        title
+        title,
+        category
       });
     }
   }
-
-  onChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
-  };
 
   onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
@@ -54,15 +52,15 @@ class AddJobAdvertisement extends Component {
       _id: this.state._id,
       title: this.state.title,
       details: this.state.details,
-      status: this.state.status
+      status: this.state.status,
+      category: this.state.category
     };
 
     this.props.updateAdd(data, this.props.history);
   };
 
   render() {
-    const { errors, status } = this.state;
-    console.log(status);
+    const { errors } = this.state;
     return (
       <div className="m-3 pt-5 ">
         <form className="form" onSubmit={this.onSubmit}>
@@ -80,7 +78,7 @@ class AddJobAdvertisement extends Component {
             <div className="invalid-feedback">{errors.title}</div>
           )}
           <textarea
-            rows="2"
+            rows="3"
             placeholder="Job Descriptions"
             className={classnames("form-control mt-2", {
               "is-invalid": errors.details
@@ -93,21 +91,27 @@ class AddJobAdvertisement extends Component {
             <div className="invalid-feedback">{errors.details}</div>
           )}
 
-          <div className="d-flex justify-content-between">
-            <div className="custom-control custom-checkbox">
-              <input
-                type="checkbox"
-                name="status"
-                className="custom-control-input"
-                id="defaultChecked2"
-                defaultValue={this.state.status}
-                defaultChecked={this.state.status}
-              />
-              <label className="custom-control-label" htmlFor="defaultChecked2">
-                Status
-              </label>
-            </div>
+          <div className="form-group mt-2">
+            <select
+              id="category"
+              className={classnames("form-control form-control-lg", {
+                "is-invalid": errors.category
+              })}
+              name="category"
+              value={this.state.category}
+              onChange={this.onChange}
+            >
+              <option hidden>Categories</option>
+              {["Accounting/Finance", "Call Center", "Computer/IT"].map(
+                option => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                )
+              )}
+            </select>
           </div>
+
           <input
             type="submit"
             className="btn btn-block mt-2 purple darken-3  waves-effect"

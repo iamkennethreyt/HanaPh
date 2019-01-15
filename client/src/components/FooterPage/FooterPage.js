@@ -3,11 +3,25 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
+import { confirmAlert } from "react-confirm-alert"; // Import
+import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 
 class FooterPage extends Component {
-  onLogout = e => {
-    e.preventDefault();
-    this.props.logoutUser();
+  onLogout = () => {
+    confirmAlert({
+      message: "Are you sure to logout the account?",
+      buttons: [
+        {
+          label: "Ok",
+          onClick: () => {
+            this.props.logoutUser();
+          }
+        },
+        {
+          label: "Cancel"
+        }
+      ]
+    });
   };
 
   render() {
@@ -30,9 +44,13 @@ class FooterPage extends Component {
               <Link to="/" className="tw-ic">
                 <i className="fa fa-info fa-lg text-white-50 mr-md-5 mx-4 fa-2x" />
               </Link>
-              <Link to="/" className="li-ic" onClick={this.onLogout}>
+              <p
+                className="li-ic"
+                onClick={this.onLogout}
+                style={{ cursor: "pointer" }}
+              >
                 <i className="fa fa-sign-out fa-lg text-white-50 mr-md-5 mx-4 fa-2x" />
-              </Link>
+              </p>
             </div>
           </div>
         </div>

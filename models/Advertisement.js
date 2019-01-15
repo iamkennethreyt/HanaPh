@@ -15,6 +15,10 @@ const AdvertisementSchema = new Schema({
     type: String,
     required: true
   },
+  category: {
+    type: String,
+    required: true
+  },
   applicants: [
     {
       user: {
