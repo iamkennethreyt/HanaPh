@@ -129,7 +129,7 @@ router.get("/all", (req, res) => {
 // @route   GET api/users/:id
 // @desc    Show single user based on the params id
 // @access  Public
-router.get("/id/:id", (req, res) => {
+router.get("/profile/:id", (req, res) => {
   User.findById(req.params.id)
     .then(adv => {
       if (adv) {

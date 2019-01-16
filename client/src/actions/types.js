@@ -9,3 +9,4 @@ export const DELETE_AD = "DELETE_AD";
 
 export const GET_CURRENT_USER = "GET_CURRENT_USER";
 export const PUT_CURRENT_USER = "PUT_CURRENT_USER";
+export const GET_USER = "GET_USER";

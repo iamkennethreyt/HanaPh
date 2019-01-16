@@ -85,10 +85,10 @@ export const setCurrentUser = decoded => {
 };
 
 //logout user
-export const logoutUser = () => dispatch => {
+export const logoutUser = history => dispatch => {
   //remove token from localstorage
   localStorage.removeItem("jwtToken");
-
+  window.location.href = "/";
   //remove auth header for future requests
   setAuthToken(false);
 

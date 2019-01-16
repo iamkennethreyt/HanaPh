@@ -14,6 +14,7 @@ import EditJobAdvertisement from "../EditJobAdvertisement/EditJobAdvertisement";
 import SettingsPage from "../SettingsPage/SettiingsPage";
 import PasswordSettingsPage from "../SettingsPage/PasswordSettingsPage";
 import ViewJobAdvertisement from "../ViewJobAdvertisement/ViewJobAdvertisement";
+import ViewProfile from "../ViewProfile/ViewProfile";
 
 class AppPage extends Component {
   render() {
@@ -51,6 +52,7 @@ class AppPage extends Component {
                 path="/settings/password"
                 component={PasswordSettingsPage}
               />
+              <Route exact path="/profile/:id" component={ViewProfile} />
 
               <FooterPage />
             </React.Fragment>

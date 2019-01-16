@@ -1,9 +1,10 @@
 // GET_CURRENT_USER
 
-import { GET_CURRENT_USER } from "../actions/types";
+import { GET_CURRENT_USER, GET_USER } from "../actions/types";
 
 const initialState = {
-  currentUser: {}
+  currentUser: {},
+  user: {}
 };
 
 export default function(state = initialState, action) {
@@ -12,6 +13,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         currentUser: action.payload
+      };
+    case GET_USER:
+      return {
+        ...state,
+        user: action.payload
       };
     default:
       return state;

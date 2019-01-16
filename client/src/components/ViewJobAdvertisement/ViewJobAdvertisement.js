@@ -24,6 +24,13 @@ class AddJobAdvertisement extends Component {
         email: "",
         contactInfo: ""
       },
+      applicants: [
+        {
+          user: {
+            name: ""
+          }
+        }
+      ],
       status: false,
       category: ""
     };
@@ -38,16 +45,24 @@ class AddJobAdvertisement extends Component {
       this.setState({ errors: nextProps.errors });
     }
     if (nextProps.adv) {
-      const { details, status, title, _id, category, user } = nextProps.adv;
+      const {
+        details,
+        status,
+        title,
+        _id,
+        category,
+        user,
+        applicants
+      } = nextProps.adv;
       this.setState({
         _id,
         details,
         status,
         title,
         category,
-        user
+        user,
+        applicants
       });
-      console.log(nextProps.adv);
     }
   }
 
@@ -77,7 +92,24 @@ class AddJobAdvertisement extends Component {
             </button>
           </div>
         ) : (
-          <div>yehooo</div>
+          <ul className="list-group">
+            {this.state.applicants.map((applicant, id) => {
+              return (
+                <li
+                  key={id}
+                  className="list-group-item d-flex justify-content-between align-items-center"
+                >
+                  {applicant.user.name}
+                  <Link
+                    to={`/profile/${applicant.user._id}`}
+                    className="badge badge-primary badge-pill"
+                  >
+                    View profile
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
         )}
       </div>
     );

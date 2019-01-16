@@ -14,7 +14,7 @@ class FooterPage extends Component {
         {
           label: "Ok",
           onClick: () => {
-            this.props.logoutUser();
+            this.props.logoutUser(this.props.history);
           }
         },
         {

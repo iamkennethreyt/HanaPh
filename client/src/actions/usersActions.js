@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { GET_CURRENT_USER, GET_ERRORS } from "./types";
+import { GET_CURRENT_USER, GET_ERRORS, GET_USER } from "./types";
 
 //get current user
 export const getCurrentUser = () => dispatch => {
@@ -48,4 +48,21 @@ export const updatePassword = (data, history) => dispatch => {
         payload: err.response.data
       })
     );
+};
+
+export const getUser = id => dispatch => {
+  axios
+    .get(`/api/users/profile/${id}`)
+    .then(res => {
+      dispatch({
+        type: GET_USER,
+        payload: res.data
+      });
+    })
+    .catch(err => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      });
+    });
 };
