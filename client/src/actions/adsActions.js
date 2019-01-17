@@ -87,15 +87,10 @@ export const deleteAd = id => dispatch => {
 };
 
 export const submitApplication = id => dispatch => {
-  axios
-    .put(`/api/advertisements/apply/${id}`)
-    .then(res => {
-      console.log(res.data);
+  axios.put(`/api/advertisements/apply/${id}`).catch(err =>
+    dispatch({
+      type: GET_ERRORS,
+      payload: err.response.data
     })
-    .catch(err =>
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      })
-    );
+  );
 };

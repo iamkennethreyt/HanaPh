@@ -62,10 +62,7 @@ class RegisterEmployer extends Component {
             <span className="purple-text">Hana</span>Ph
           </h1>
         </div>
-        <form
-          className="text-center border border-light p-2"
-          onSubmit={this.onSubmit}
-        >
+        <form className="border border-light p-2" onSubmit={this.onSubmit}>
           <p className="h4 mb-4">Sign up as Employer</p>
 
           <input
@@ -73,7 +70,7 @@ class RegisterEmployer extends Component {
             className={classnames("form-control mt-2", {
               "is-invalid": errors.name
             })}
-            placeholder="Full name"
+            placeholder="Employer/Company name"
             name="name"
             value={this.state.name}
             onChange={this.onChange}
@@ -109,7 +106,6 @@ class RegisterEmployer extends Component {
           )}
 
           <div className="form-group">
-            <label htmlFor="cityProvince">City/Province</label>
             <select
               id="cityProvince"
               className={classnames("form-control form-control-lg", {

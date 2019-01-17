@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
 import { confirmAlert } from "react-confirm-alert"; // Import
-import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 
 class FooterPage extends Component {
   onLogout = () => {
@@ -31,6 +30,9 @@ class FooterPage extends Component {
         <div className="row">
           <div className="col-md-12">
             <div className="py-3 flex-center">
+              <Link to="/home" className="tw-ic">
+                <i className="fa fa-home fa-lg text-white-50 mr-md-5 mx-4 fa-2x" />
+              </Link>
               <Link to="/" className="fb-ic">
                 <i className="fa fa-bullhorn fa-lg text-white-50 mr-md-5 mx-4 fa-2x" />
               </Link>
@@ -41,9 +43,7 @@ class FooterPage extends Component {
               <Link to="/settings" className="li-ic">
                 <i className="fa fa-cog fa-lg text-white-50 mr-md-5 mx-4 fa-2x" />
               </Link>
-              <Link to="/" className="tw-ic">
-                <i className="fa fa-info fa-lg text-white-50 mr-md-5 mx-4 fa-2x" />
-              </Link>
+
               <p
                 className="li-ic"
                 onClick={this.onLogout}

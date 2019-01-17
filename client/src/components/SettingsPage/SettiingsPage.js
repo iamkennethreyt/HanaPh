@@ -5,6 +5,8 @@ import classnames from "classnames";
 import axios from "axios";
 import { connect } from "react-redux";
 import { withRouter, Link } from "react-router-dom";
+import { ToastContainer, ToastStore } from "react-toasts";
+import { confirmAlert } from "react-confirm-alert"; // Import
 
 import { getCurrentUser, updateCurrentUser } from "../../actions/usersActions";
 
@@ -228,11 +230,33 @@ class RegisterApplicant extends Component {
                   this.state.selectedFile,
                   this.state.selectedFile.name
                 );
-                axios.post("/api/users/upload", formData, {
-                  headers: {
-                    "Content-Type": "multipart/form-data"
-                  }
-                });
+                axios
+                  .post("/api/users/upload", formData, {
+                    headers: {
+                      "Content-Type": "multipart/form-data"
+                    }
+                  })
+                  .then(() => {
+                    // import { confirmAlert } from "react-confirm-alert"; // Import
+                    confirmAlert({
+                      message: "You had successfully update your resume",
+                      buttons: [
+                        {
+                          label: "Ok"
+                        }
+                      ]
+                    });
+                  })
+                  .catch(err => {
+                    confirmAlert({
+                      message: "You have not selected resume yet",
+                      buttons: [
+                        {
+                          label: "Ok"
+                        }
+                      ]
+                    });
+                  });
               }}
             >
               <p className="text-center">RESUME</p>
@@ -254,6 +278,7 @@ class RegisterApplicant extends Component {
                 className="btn mt-1 purple darken-3 btn-block"
               />
             </form>
+            <ToastContainer store={ToastStore} />
           </div>
         ) : null}
       </div>

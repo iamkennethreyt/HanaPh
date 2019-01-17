@@ -7,7 +7,6 @@ import moment from "moment";
 import { Link } from "react-router-dom";
 import { confirmAlert } from "react-confirm-alert"; // Import
 import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
-import axios from "axios";
 
 class HomePage extends Component {
   componentDidMount() {
@@ -33,6 +32,11 @@ class HomePage extends Component {
     return (
       <div>
         <ul className="list-group mt-5">
+          {this.props.advertisements.ads.length === 0 ? (
+            <h4 className="text-center mt-3">No advertisements yet</h4>
+          ) : (
+            <h4 className="text-center mt-3">List of Advertisement</h4>
+          )}
           {this.props.auth.user.type === "employer"
             ? this.props.advertisements.ads
                 .filter(ads => this.props.auth.user.id === ads.user._id)

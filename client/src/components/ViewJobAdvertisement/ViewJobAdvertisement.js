@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-
+import moment from "moment";
 import PropTypes from "prop-types";
-import classnames from "classnames";
+import { confirmAlert } from "react-confirm-alert"; // Import
 
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
@@ -16,6 +16,7 @@ class AddJobAdvertisement extends Component {
       _id: "",
       title: "",
       details: "",
+      date: "",
       user: {
         name: "",
         details: "",
@@ -52,7 +53,8 @@ class AddJobAdvertisement extends Component {
         _id,
         category,
         user,
-        applicants
+        applicants,
+        date
       } = nextProps.adv;
       this.setState({
         _id,
@@ -61,7 +63,8 @@ class AddJobAdvertisement extends Component {
         title,
         category,
         user,
-        applicants
+        applicants,
+        date
       });
     }
   }
@@ -70,23 +73,51 @@ class AddJobAdvertisement extends Component {
     const { user } = this.state;
     return (
       <div className="m-3 pt-5 grey-text">
-        <h3 className="text-center">{this.state.title}</h3>
+        <h4>
+          Ads Title :<strong>{this.state.title}</strong>
+        </h4>
         <div>
-          <strong>{this.state.category}</strong>
+          <p>
+            Category :<strong>{this.state.category}</strong>
+          </p>
           <p>{this.state.details}</p>
+          <small>Date posted : {moment(this.state.date).format("LL")}</small>
         </div>
         <hr />
         {this.props.auth.user.type === "applicant" ? (
-          <div>
+          <div className="mb-5 pb-5">
             <h6 className="text-center">Emplyer Details</h6>
             <h4>{user.name}</h4>
-            <small>{user.email}</small>
-            <p>{user.details}</p>
-            <strong>{user.contactInfo}</strong>
-            <p>{user.completeAddress}</p>
+
+            <p>
+              About the Company : <br />
+              {user.details}
+            </p>
+            <small>
+              {" "}
+              Comapany Email : <strong>{user.email}</strong>
+            </small>
+            <br />
+            <small>
+              Contact Info : <strong>{user.contactInfo}</strong>
+            </small>
+            <br />
+            <small>
+              Company Address :<strong>{user.completeAddress}</strong>
+            </small>
             <button
               className="btn btn-block btn-sm btn-outline-secondary"
-              onClick={() => this.props.submitApplication(this.state._id)}
+              onClick={() => {
+                this.props.submitApplication(this.state._id);
+                confirmAlert({
+                  message: "You had successfully sent resume to the employer",
+                  buttons: [
+                    {
+                      label: "Ok"
+                    }
+                  ]
+                });
+              }}
             >
               Apply THIS Advertisement
             </button>

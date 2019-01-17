@@ -6,6 +6,7 @@ import jwt_decode from "jwt-decode";
 import { setCurrentUser, logoutUser } from "./actions/authActions";
 import store from "./store";
 import setAuthToken from "./utils/setAuthToken";
+import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 
 // import Login from "./components/Login";
 // import Home from "./components/Home";
