@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+const methodOverride = require("method-override");
 const passport = require("passport");
 
 const users = require("./routes/api/users");
@@ -11,6 +12,7 @@ const app = express();
 //body parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(methodOverride("_method"));
 
 //db config
 const db = require("./config/key").mongoURI;

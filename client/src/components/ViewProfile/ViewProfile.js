@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
-import { getUser } from "../../actions/usersActions";
+import { getUser, downloadResume } from "../../actions/usersActions";
 
 class AddJobAdvertisement extends Component {
   constructor() {
@@ -51,7 +51,7 @@ class AddJobAdvertisement extends Component {
   }
 
   render() {
-    const { name, email, details, contactInfo, cityProvince } = this.state;
+    const { name, email, details, contactInfo, cityProvince, _id } = this.state;
     return (
       <div className="m-3 pt-5 grey-text">
         <h6 className="text-center">Emplyer Details</h6>
@@ -60,7 +60,12 @@ class AddJobAdvertisement extends Component {
         <p>{details}</p>
         <strong>{contactInfo}</strong>
         <p>{cityProvince}</p>
-        <button className="btn btn-outline-secondary">download resume</button>
+        <button
+          className="btn btn-outline-secondary"
+          onClick={() => this.props.downloadResume(_id, name)}
+        >
+          download resume
+        </button>
       </div>
     );
   }
@@ -68,7 +73,8 @@ class AddJobAdvertisement extends Component {
 
 AddJobAdvertisement.protoTypes = {
   getUser: PropTypes.func.isRequired,
-  user: PropTypes.object.isRequired
+  user: PropTypes.object.isRequired,
+  downloadResume: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -78,5 +84,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getUser }
+  { getUser, downloadResume }
 )(withRouter(AddJobAdvertisement));

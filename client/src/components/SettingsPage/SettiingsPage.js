@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import PropTypes from "prop-types";
 import classnames from "classnames";
-
+import axios from "axios";
 import { connect } from "react-redux";
 import { withRouter, Link } from "react-router-dom";
 
@@ -18,9 +18,16 @@ class RegisterApplicant extends Component {
       cityProvince: "",
       completeAddress: "",
       details: "",
-      errors: {}
+      errors: {},
+      selectedFile: ""
     };
   }
+
+  handleselectedFile = event => {
+    this.setState({
+      selectedFile: event.target.files[0]
+    });
+  };
 
   componentDidMount() {
     this.props.getCurrentUser();
@@ -76,7 +83,7 @@ class RegisterApplicant extends Component {
     const { errors } = this.state;
     return (
       <div className="p-2 mt-5">
-        <form className="border border-light p-2" onSubmit={this.onSubmit}>
+        <form className="border border-light p-2 pb-2" onSubmit={this.onSubmit}>
           <p className="h4 mb-4">Account Settings</p>
 
           {this.props.auth.user.type === "Applicant" ? (
@@ -203,6 +210,52 @@ class RegisterApplicant extends Component {
             Password Settings
           </Link>
         </form>
+
+        {this.props.auth.user.type === "applicant" ? (
+          <div className="">
+            <hr />
+
+            <form
+              className="mb-5 p-1"
+              encType="multipart/form-data"
+              onSubmit={e => {
+                e.preventDefault();
+                console.log("test");
+
+                const formData = new FormData();
+                formData.append(
+                  "file",
+                  this.state.selectedFile,
+                  this.state.selectedFile.name
+                );
+                axios.post("/api/users/upload", formData, {
+                  headers: {
+                    "Content-Type": "multipart/form-data"
+                  }
+                });
+              }}
+            >
+              <p className="text-center">RESUME</p>
+              <div className="custom-file">
+                <input
+                  type="file"
+                  name="file"
+                  id="file"
+                  className="custom-file-input"
+                  onChange={this.handleselectedFile}
+                />
+                <label htmlFor="file" className="custom-file-label">
+                  Choose your Resume
+                </label>
+              </div>
+              <input
+                type="submit"
+                value="Upload Resume"
+                className="btn mt-1 purple darken-3 btn-block"
+              />
+            </form>
+          </div>
+        ) : null}
       </div>
     );
   }

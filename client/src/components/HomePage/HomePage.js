@@ -7,6 +7,7 @@ import moment from "moment";
 import { Link } from "react-router-dom";
 import { confirmAlert } from "react-confirm-alert"; // Import
 import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
+import axios from "axios";
 
 class HomePage extends Component {
   componentDidMount() {

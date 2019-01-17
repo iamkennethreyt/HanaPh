@@ -2,6 +2,12 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const passport = require("passport");
+const mongoose = require("mongoose");
+const crypto = require("crypto");
+const multer = require("multer");
+const GridFsStorage = require("multer-gridfs-storage");
+const Grid = require("gridfs-stream");
+const path = require("path");
 
 const router = express.Router();
 
@@ -12,8 +18,44 @@ const ValidateRegisterInput = require("../../validations/register");
 const ValidateLoginInput = require("../../validations/login");
 const validateAccountSettingsPasswordInput = require("../../validations/accountSettingsPassword");
 
+// Mongo URI
+const mongoURI = "mongodb://localhost:27017/hanaph";
+
+// Create mongo connection
+const conn = mongoose.createConnection(mongoURI);
+
+// Init gfs
+let gfs;
+
+conn.once("open", () => {
+  // Init stream
+  gfs = Grid(conn.db, mongoose.mongo);
+  gfs.collection("uploads");
+});
+
 //load User model
 const User = require("../../models/User");
+
+// Create storage engine
+const storage = new GridFsStorage({
+  url: mongoURI,
+  file: (req, file) => {
+    return new Promise((resolve, reject) => {
+      crypto.randomBytes(16, (err, buf) => {
+        if (err) {
+          return reject(err);
+        }
+        const filename = buf.toString("hex") + path.extname(file.originalname);
+        const fileInfo = {
+          filename: filename,
+          bucketName: "uploads"
+        };
+        resolve(fileInfo);
+      });
+    });
+  }
+});
+const upload = multer({ storage });
 
 //@route    POST api/users/register
 //@desc     register new user
@@ -37,7 +79,8 @@ router.post("/register", (req, res) => {
         password: req.body.password,
         contactInfo: req.body.contactInfo,
         cityProvince: req.body.cityProvince,
-        type: req.body.type
+        type: req.body.type,
+        resume: "nothing"
       });
 
       bcrypt.genSalt(10, (err, salt) => {
@@ -221,5 +264,56 @@ router.get(
     res.json(req.user);
   }
 );
+
+// @route POST /upload
+// @desc  Uploads file to DB
+router.post(
+  "/upload",
+  upload.single("file"),
+  passport.authenticate("jwt", { session: false }),
+
+  (req, res) => {
+    const user = {};
+
+    user.resume = req.file.filename;
+
+    User.findOneAndUpdate(
+      { _id: req.user.id },
+      { $set: user },
+      { new: true }
+    ).then(user => res.json(user));
+  }
+);
+
+// @route GET /download/:filename
+// @desc  Download single file object
+router.get("/download/:id", (req, res) => {
+  User.findById(req.params.id).then(user => {
+    gfs.files.findOne({ filename: user.resume }, (err, file) => {
+      // Check if file
+      if (!file || file.length === 0) {
+        return res.status(404).json({
+          err: "No file exists"
+        });
+      }
+      // File exists
+      res.set("Content-Type", file.contentType);
+      res.set(
+        "Content-Disposition",
+        'attachment; filename="' + file.filename + '"'
+      );
+      // streaming from gridfs
+      var readstream = gfs.createReadStream({
+        filename: user.resume
+      });
+      //error handling, e.g. file does not exist
+      readstream.on("error", function(err) {
+        console.log("An error occurred!", err);
+        throw err;
+      });
+      readstream.pipe(res);
+    });
+  });
+});
 
 module.exports = router;
