@@ -16,6 +16,7 @@ import PasswordSettingsPage from "../SettingsPage/PasswordSettingsPage";
 import ViewJobAdvertisement from "../ViewJobAdvertisement/ViewJobAdvertisement";
 import ViewProfile from "../ViewProfile/ViewProfile";
 import LandingPage from "../LandingPage/LandingPage";
+import AboutPage from "../AboutPage/AboutPage";
 
 class AppPage extends Component {
   render() {
@@ -55,6 +56,7 @@ class AppPage extends Component {
               />
               <Route exact path="/profile/:id" component={ViewProfile} />
               <Route exact path="/home" component={LandingPage} />
+              <Route exact path="/about" component={AboutPage} />
 
               <FooterPage />
             </React.Fragment>
@@ -75,10 +77,6 @@ class AppPage extends Component {
               />
             </React.Fragment>
           )}
-
-          {/* <Route exact path="/register" component={Register} />
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/accountsettings" component={AccountSettings} /> */}
         </React.Fragment>
       </Router>
     );

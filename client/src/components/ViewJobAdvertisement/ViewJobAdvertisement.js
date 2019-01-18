@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-import moment from "moment";
 import PropTypes from "prop-types";
 import { confirmAlert } from "react-confirm-alert"; // Import
-
+import moment from "moment";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
@@ -73,6 +72,14 @@ class AddJobAdvertisement extends Component {
     const { user } = this.state;
     return (
       <div className="m-3 pt-5 grey-text">
+        <u
+          className="mt-2"
+          style={{ cursor: "pointer" }}
+          onClick={() => this.props.history.goBack()}
+        >
+          Back
+        </u>
+
         <h4>
           Ads Title :<strong>{this.state.title}</strong>
         </h4>
@@ -110,7 +117,8 @@ class AddJobAdvertisement extends Component {
               onClick={() => {
                 this.props.submitApplication(this.state._id);
                 confirmAlert({
-                  message: "You had successfully sent resume to the employer",
+                  message:
+                    "You had successfully apply this advertisement to the employer",
                   buttons: [
                     {
                       label: "Ok"
@@ -130,10 +138,14 @@ class AddJobAdvertisement extends Component {
                   key={id}
                   className="list-group-item d-flex justify-content-between align-items-center"
                 >
-                  {applicant.user.name}
+                  <p>
+                    {applicant.user.name}
+                    <br className="p-0" />
+                    <small>{moment(applicant.date).format("LLL")}</small>
+                  </p>
                   <Link
                     to={`/profile/${applicant.user._id}`}
-                    className="badge badge-primary badge-pill"
+                    className="badge badge-secondary badge-pill"
                   >
                     View profile
                   </Link>

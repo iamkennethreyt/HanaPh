@@ -31,7 +31,7 @@ class HomePage extends Component {
   render() {
     return (
       <div>
-        <ul className="list-group mt-5">
+        <ul className="list-group mt-5 mb-5">
           {this.props.advertisements.ads.length === 0 ? (
             <h4 className="text-center mt-3">No advertisements yet</h4>
           ) : (

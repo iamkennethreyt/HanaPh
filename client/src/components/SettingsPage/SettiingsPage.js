@@ -5,7 +5,6 @@ import classnames from "classnames";
 import axios from "axios";
 import { connect } from "react-redux";
 import { withRouter, Link } from "react-router-dom";
-import { ToastContainer, ToastStore } from "react-toasts";
 import { confirmAlert } from "react-confirm-alert"; // Import
 
 import { getCurrentUser, updateCurrentUser } from "../../actions/usersActions";
@@ -84,7 +83,7 @@ class RegisterApplicant extends Component {
   render() {
     const { errors } = this.state;
     return (
-      <div className="p-2 mt-5">
+      <div className="p-2 mt-5 mb-5">
         <form className="border border-light p-2 pb-2" onSubmit={this.onSubmit}>
           <p className="h4 mb-4">Account Settings</p>
 
@@ -113,6 +112,7 @@ class RegisterApplicant extends Component {
           )}
 
           <input
+            disabled
             type="email"
             className={classnames("form-control mt-2", {
               "is-invalid": errors.email
@@ -278,7 +278,6 @@ class RegisterApplicant extends Component {
                 className="btn mt-1 purple darken-3 btn-block"
               />
             </form>
-            <ToastContainer store={ToastStore} />
           </div>
         ) : null}
       </div>

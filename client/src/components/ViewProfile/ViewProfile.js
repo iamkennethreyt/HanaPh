@@ -16,7 +16,8 @@ class AddJobAdvertisement extends Component {
       cityProvince: "",
       completeAddress: "",
       email: "",
-      contactInfo: ""
+      contactInfo: "",
+      resume: ""
     };
   }
 
@@ -36,36 +37,69 @@ class AddJobAdvertisement extends Component {
         cityProvince,
         completeAddress,
         email,
-        contactInfo
+        contactInfo,
+        resume
       } = nextProps.user;
       this.setState({
         _id,
         name,
         details,
         cityProvince,
-        completeAddress,
         email,
-        contactInfo
+        contactInfo,
+        completeAddress,
+        resume
       });
     }
   }
 
   render() {
-    const { name, email, details, contactInfo, cityProvince, _id } = this.state;
+    const {
+      name,
+      email,
+      details,
+      contactInfo,
+      cityProvince,
+      _id,
+      resume,
+      completeAddress
+    } = this.state;
     return (
       <div className="m-3 pt-5 grey-text">
-        <h6 className="text-center">Emplyer Details</h6>
-        <h4>{name}</h4>
-        <small>{email}</small>
-        <p>{details}</p>
-        <strong>{contactInfo}</strong>
-        <p>{cityProvince}</p>
-        <button
-          className="btn btn-outline-secondary"
-          onClick={() => this.props.downloadResume(_id, name)}
+        <u
+          className="mt-3"
+          style={{ cursor: "pointer" }}
+          onClick={() => this.props.history.goBack()}
         >
-          download resume
-        </button>
+          Back
+        </u>
+        <h3 className="text-center">Applicant Details</h3>
+        <h4>
+          Name : <strong>{name}</strong>
+        </h4>
+        <small>
+          Email : <strong>{email}</strong>
+        </small>
+        <p>{details}</p>
+        <strong>
+          Contact Info : <strong>{contactInfo}</strong>
+        </strong>
+        <p>
+          Complete Address : <strong>{completeAddress}</strong>
+        </p>
+        <p>
+          City / Province : <strong>{cityProvince}</strong>
+        </p>
+        {resume === "nothing" ? (
+          <h6>No Resume Yet</h6>
+        ) : (
+          <button
+            className="btn btn-outline-secondary"
+            onClick={() => this.props.downloadResume(_id, name)}
+          >
+            download resume
+          </button>
+        )}
       </div>
     );
   }

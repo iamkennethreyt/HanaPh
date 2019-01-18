@@ -43,7 +43,7 @@ class RegisterApplicant extends Component {
   render() {
     const { errors } = this.state;
     return (
-      <div className="p-2 mt-5">
+      <div className="p-2 mt-5 pt-3">
         <form className="border border-light p-2" onSubmit={this.onSubmit}>
           <p className="h4 mb-4">Password Settings</p>
 

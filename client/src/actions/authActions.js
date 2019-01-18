@@ -31,7 +31,7 @@ export const registerEmployer = (userdata, history) => dispatch => {
 };
 
 //Login User
-export const loginUser = userdata => dispatch => {
+export const loginUser = (userdata, history) => dispatch => {
   axios
     .post("/api/users/login", userdata)
     .then(res => {
@@ -49,6 +49,8 @@ export const loginUser = userdata => dispatch => {
 
       //set current user
       dispatch(setCurrentUser(decoded));
+
+      history.push("/home");
     })
     .catch(err =>
       dispatch({
