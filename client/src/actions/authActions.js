@@ -5,10 +5,13 @@ import jwt_decode from "jwt-decode";
 import { GET_ERRORS, SET_CURRENT_USER, GET_CURRENT_USER } from "./types";
 
 //Register Applicant
-export const registerApplicant = (userdata, history) => dispatch => {
+export const registerApplicant = (userdata, history, onSuccess) => dispatch => {
   axios
     .post("/api/users/register", userdata)
-    .then(res => history.push("/"))
+    .then(res => {
+      history.push("/");
+      onSuccess();
+    })
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
@@ -18,16 +21,20 @@ export const registerApplicant = (userdata, history) => dispatch => {
 };
 
 //Register Employer
-export const registerEmployer = (userdata, history) => dispatch => {
+export const registerEmployer = (userdata, history, onSuccess) => dispatch => {
   axios
     .post("/api/users/register", userdata)
-    .then(res => history.push("/"))
-    .catch(err =>
+    .then(res => {
+      history.push("/");
+      onSuccess();
+    })
+    .catch(err => {
+      console.log(err);
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data
-      })
-    );
+      });
+    });
 };
 
 //Login User

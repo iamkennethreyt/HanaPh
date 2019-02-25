@@ -6,6 +6,8 @@ import classnames from "classnames";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
+import { confirmAlert } from "react-confirm-alert"; // Import
+
 import { postAd } from "../../actions/adsActions";
 import { Link } from "react-router-dom";
 class AddJobAdvertisement extends Component {
@@ -34,6 +36,17 @@ class AddJobAdvertisement extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+  onSuccess = () => {
+    confirmAlert({
+      message: "You had successfully added new advertisement",
+      buttons: [
+        {
+          label: "Ok"
+        }
+      ]
+    });
+  };
+
   onSubmit = e => {
     e.preventDefault();
 
@@ -45,7 +58,7 @@ class AddJobAdvertisement extends Component {
     };
 
     // console.log(newJob);
-    this.props.postAd(newJob, this.props.history);
+    this.props.postAd(newJob, this.props.history, this.onSuccess);
   };
 
   render() {

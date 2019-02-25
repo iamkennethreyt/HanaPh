@@ -3,7 +3,7 @@ import axios from "axios";
 import { GET_ERRORS, GET_ADS, GET_AD, POST_AD, DELETE_AD } from "./types";
 
 //Register Employer
-export const postAd = (adsdata, history) => dispatch => {
+export const postAd = (adsdata, history, onSuccess) => dispatch => {
   axios
     .post("/api/advertisements", adsdata)
     .then(res => {
@@ -12,7 +12,10 @@ export const postAd = (adsdata, history) => dispatch => {
         payload: res.data
       });
     })
-    .then(() => history.push("/"))
+    .then(() => {
+      history.push("/");
+      onSuccess();
+    })
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
