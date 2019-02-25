@@ -1,7 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const transporter = require("../../config/key").transporter;
+const passport = require("passport");
+const nodemailer = require("nodemailer");
 
+const transporter = require("../../config/key").transporter;
 // Advertisement model
 const Advertisement = require("../../models/Advertisement");
 
@@ -169,8 +171,28 @@ router.post(
   "/sendemail",
   // passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    const { applicantName, applicantEmail, companyname, message } = req.body;
-    res.json({ applicantName, applicantEmail, companyname, message });
+    const {
+      applicantName,
+      applicantEmail,
+      companyname,
+      message,
+      companyemail
+    } = req.body;
+
+    const mailOptions = {
+      from: applicantEmail,
+      to: companyemail,
+      subject: `Message from ${applicantName}`,
+      text: message
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        return res.status(400).json(error);
+      } else {
+        res.json({ success: info.response });
+      }
+    });
   }
 );
 
@@ -181,7 +203,20 @@ router.post(
   // passport.authenticate("jwt", { session: false }),
   (req, res) => {
     const { email, message } = req.body;
-    res.json({ email, message });
+    const mailOptions = {
+      from: email,
+      to: "iamkennethreyt@gmail.com",
+      subject: "Message from your Hanaph App",
+      text: message
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        return res.status(400).json(error);
+      } else {
+        res.json({ success: info.response });
+      }
+    });
   }
 );
 module.exports = router;

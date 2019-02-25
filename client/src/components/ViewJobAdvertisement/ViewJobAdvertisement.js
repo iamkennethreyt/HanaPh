@@ -140,6 +140,7 @@ class AddJobAdvertisement extends Component {
                     applicantName: this.props.auth.user.name,
                     applicantEmail: this.props.auth.user.email,
                     companyname: user.name,
+                    companyemail: user.email,
                     message: `Good day ${
                       user.name
                     } you have a new notification to the advertisement you posted in HanaPH, that Mr/Ms ${
