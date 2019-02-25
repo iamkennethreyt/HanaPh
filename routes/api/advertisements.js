@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const mongoose = require("mongoose");
-const passport = require("passport");
+const transporter = require("../../config/key").transporter;
 
 // Advertisement model
 const Advertisement = require("../../models/Advertisement");
