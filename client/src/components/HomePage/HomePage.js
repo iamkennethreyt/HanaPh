@@ -89,15 +89,20 @@ class HomePage extends Component {
                         <small>{moment(add.date).format("LL")}</small>
                       </div>
                       <p className="mb-2">{add.details}</p>
+                      {add.applicants.length === 0 ? null : (
+                        <p className="m-1 text-primary">
+                          {add.applicants.length} new applicant(s)
+                        </p>
+                      )}
                       <small className="grey-text">
                         Category : {add.category}
                       </small>
                       <div className="d-flex justify-content-between">
                         <div
-                          className="grey-text d-text waves-effect"
+                          className="red-text d-text waves-effect"
                           onClick={this.onDelete.bind(this, add._id)}
                         >
-                          <i className="fa grey-text fa-1x fa-trash mr-1" />{" "}
+                          <i className="fa  fa-1x fa-trash mr-1" />{" "}
                           <small>Delete</small>
                         </div>
                         <Link

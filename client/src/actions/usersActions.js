@@ -21,11 +21,11 @@ export const getCurrentUser = () => dispatch => {
 };
 
 //update current user
-export const updateCurrentUser = (data, history) => dispatch => {
+export const updateCurrentUser = (data, onSuccess) => dispatch => {
   axios
     .put("/api/users/accountsettings", data)
     .then(() => {
-      history.push("/");
+      onSuccess();
     })
     .catch(err =>
       dispatch({
@@ -36,12 +36,11 @@ export const updateCurrentUser = (data, history) => dispatch => {
 };
 
 //update password
-export const updatePassword = (data, history) => dispatch => {
+export const updatePassword = (data, history, onSuccess) => dispatch => {
   axios
     .put("/api/users/accountsettings/password", data)
-    .then(() => {
-      history.push("/");
-    })
+    .then(() => onSuccess())
+    .then(() => history.push("/settings"))
     .catch(err =>
       dispatch({
         type: GET_ERRORS,

@@ -24,6 +24,17 @@ class RegisterApplicant extends Component {
     };
   }
 
+  onSuccess = () => {
+    confirmAlert({
+      message: "You had successfully updated your account",
+      buttons: [
+        {
+          label: "Ok"
+        }
+      ]
+    });
+  };
+
   handleselectedFile = event => {
     this.setState({
       selectedFile: event.target.files[0]
@@ -78,7 +89,7 @@ class RegisterApplicant extends Component {
       details: this.state.details
     };
 
-    this.props.updateCurrentUser(data, this.props.history);
+    this.props.updateCurrentUser(data, this.onSuccess);
   };
   render() {
     const { errors } = this.state;

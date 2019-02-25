@@ -8,6 +8,8 @@ import { withRouter, Link } from "react-router-dom";
 
 import { updatePassword } from "../../actions/usersActions";
 
+import { confirmAlert } from "react-confirm-alert"; // Import
+
 class RegisterApplicant extends Component {
   constructor() {
     super();
@@ -29,6 +31,17 @@ class RegisterApplicant extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+  onSuccess = () => {
+    confirmAlert({
+      message: "You had successfully changed your password",
+      buttons: [
+        {
+          label: "Ok"
+        }
+      ]
+    });
+  };
+
   onSubmit = e => {
     e.preventDefault();
 
@@ -38,7 +51,7 @@ class RegisterApplicant extends Component {
       password3: this.state.password3
     };
 
-    this.props.updatePassword(data, this.props.history);
+    this.props.updatePassword(data, this.props.history, this.onSuccess);
   };
   render() {
     const { errors } = this.state;

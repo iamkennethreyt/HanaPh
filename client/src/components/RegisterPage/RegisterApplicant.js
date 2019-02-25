@@ -8,6 +8,8 @@ import { withRouter, Link } from "react-router-dom";
 
 import { registerApplicant } from "../../actions/authActions";
 
+import { confirmAlert } from "react-confirm-alert"; // Import
+
 class RegisterApplicant extends Component {
   constructor() {
     super();
@@ -21,6 +23,17 @@ class RegisterApplicant extends Component {
       errors: {}
     };
   }
+
+  onSuccess = () => {
+    confirmAlert({
+      message: "You had successfully registered an account to HanaPH",
+      buttons: [
+        {
+          label: "Ok"
+        }
+      ]
+    });
+  };
 
   componentDidMount() {
     if (this.props.auth.isAuthenticated) {
@@ -51,7 +64,7 @@ class RegisterApplicant extends Component {
       type: "applicant"
     };
 
-    this.props.registerApplicant(newUser, this.props.history);
+    this.props.registerApplicant(newUser, this.props.history, this.onSuccess);
   };
   render() {
     const { errors } = this.state;

@@ -4,7 +4,7 @@ import { confirmAlert } from "react-confirm-alert"; // Import
 import moment from "moment";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-
+import { getUser } from "../../actions/usersActions";
 import { getAd, submitApplication } from "../../actions/adsActions";
 import { Link } from "react-router-dom";
 
@@ -24,6 +24,7 @@ class AddJobAdvertisement extends Component {
         email: "",
         contactInfo: ""
       },
+      resume: "",
       applicants: [
         {
           user: {
@@ -38,6 +39,7 @@ class AddJobAdvertisement extends Component {
 
   componentDidMount() {
     this.props.getAd(this.props.match.params.id);
+    this.props.getUser(this.props.auth.user.id);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -45,6 +47,7 @@ class AddJobAdvertisement extends Component {
       this.setState({ errors: nextProps.errors });
     }
     if (nextProps.adv) {
+      console.log("======", nextProps.adv);
       const {
         details,
         status,
@@ -64,6 +67,12 @@ class AddJobAdvertisement extends Component {
         user,
         applicants,
         date
+      });
+    }
+
+    if (nextProps.users) {
+      this.setState({
+        resume: nextProps.users.user.resume
       });
     }
   }
@@ -115,16 +124,28 @@ class AddJobAdvertisement extends Component {
             <button
               className="btn btn-block btn-sm btn-outline-secondary"
               onClick={() => {
-                this.props.submitApplication(this.state._id);
-                confirmAlert({
-                  message:
-                    "You had successfully apply this advertisement to the employer",
-                  buttons: [
-                    {
-                      label: "Ok"
-                    }
-                  ]
-                });
+                if (this.state.resume === "nothing") {
+                  confirmAlert({
+                    message:
+                      "You haven't upload resume yet please upload resume before apply this advertisement",
+                    buttons: [
+                      {
+                        label: "Ok"
+                      }
+                    ]
+                  });
+                } else {
+                  this.props.submitApplication(this.state._id);
+                  confirmAlert({
+                    message:
+                      "You had successfully apply this advertisement to the employer",
+                    buttons: [
+                      {
+                        label: "Ok"
+                      }
+                    ]
+                  });
+                }
               }}
             >
               Apply THIS Advertisement
@@ -163,15 +184,17 @@ AddJobAdvertisement.protoTypes = {
   getAd: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   adv: PropTypes.object.isRequired,
+  getUser: PropTypes.func.isRequired,
   submitApplication: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  adv: state.ads.adv
+  adv: state.ads.adv,
+  users: state.users
 });
 
 export default connect(
   mapStateToProps,
-  { getAd, submitApplication }
+  { getAd, submitApplication, getUser }
 )(withRouter(AddJobAdvertisement));

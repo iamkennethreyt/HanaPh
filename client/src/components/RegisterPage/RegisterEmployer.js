@@ -6,6 +6,8 @@ import classnames from "classnames";
 import { connect } from "react-redux";
 import { withRouter, Link } from "react-router-dom";
 
+import { confirmAlert } from "react-confirm-alert"; // Import
+
 import { registerEmployer } from "../../actions/authActions";
 
 class RegisterEmployer extends Component {
@@ -27,6 +29,17 @@ class RegisterEmployer extends Component {
       this.props.history.push("/");
     }
   }
+
+  onSuccess = () => {
+    confirmAlert({
+      message: "You had successfully registered an account to HanaPH",
+      buttons: [
+        {
+          label: "Ok"
+        }
+      ]
+    });
+  };
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
@@ -51,7 +64,7 @@ class RegisterEmployer extends Component {
       type: "employer"
     };
 
-    this.props.registerEmployer(newUser, this.props.history);
+    this.props.registerEmployer(newUser, this.props.history, this.onSuccess);
   };
   render() {
     const { errors } = this.state;
