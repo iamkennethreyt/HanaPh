@@ -2,6 +2,9 @@ import React, { Component } from "react";
 
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
+import Axios from "axios";
+
+import { confirmAlert } from "react-confirm-alert"; // Import
 
 class AboutPAge extends Component {
   state = {
@@ -34,9 +37,20 @@ class AboutPAge extends Component {
             className="text-center border border-light p-2"
             onSubmit={e => {
               e.preventDefault();
-              console.log({
+              Axios.post("/api/advertisements/sendemailtoadmin", {
                 message: this.state.message,
                 email: this.props.auth.user.email
+              }).then(res => {
+                confirmAlert({
+                  message:
+                    "You had successfully send message to the HanaPH developers",
+                  buttons: [
+                    {
+                      label: "Ok"
+                    }
+                  ]
+                });
+                console.log(res.data);
               });
             }}
           >

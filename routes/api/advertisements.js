@@ -164,4 +164,25 @@ router.delete(
   }
 );
 
+// @route POST /upload
+// @desc  send email
+router.post(
+  "/sendemail",
+  // passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const { applicantName, applicantEmail, companyname, message } = req.body;
+    res.json({ applicantName, applicantEmail, companyname, message });
+  }
+);
+
+// @route POST /upload
+// @desc  send email to admin
+router.post(
+  "/sendemailtoadmin",
+  // passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const { email, message } = req.body;
+    res.json({ email, message });
+  }
+);
 module.exports = router;

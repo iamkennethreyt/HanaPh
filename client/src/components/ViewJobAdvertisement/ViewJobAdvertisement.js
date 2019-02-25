@@ -7,6 +7,7 @@ import { withRouter } from "react-router-dom";
 import { getUser } from "../../actions/usersActions";
 import { getAd, submitApplication } from "../../actions/adsActions";
 import { Link } from "react-router-dom";
+import Axios from "axios";
 
 class AddJobAdvertisement extends Component {
   constructor() {
@@ -135,6 +136,21 @@ class AddJobAdvertisement extends Component {
                     ]
                   });
                 } else {
+                  Axios.post("/api/advertisements/sendemail", {
+                    applicantName: this.props.auth.user.name,
+                    applicantEmail: this.props.auth.user.email,
+                    companyname: user.name,
+                    message: `Good day ${
+                      user.name
+                    } you have a new notification to the advertisement you posted in HanaPH, that Mr/Ms ${
+                      this.props.auth.user.name
+                    } is applying for ${
+                      this.state.title
+                    } position. you can send directly to his email ${
+                      this.props.auth.user.email
+                    }`
+                  }).then(res => console.log(res.data));
+
                   this.props.submitApplication(this.state._id);
                   confirmAlert({
                     message:
