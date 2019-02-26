@@ -136,9 +136,18 @@ class HomePage extends Component {
                     <small className="grey-text">
                       Category : {add.category}
                     </small>
+
                     <p className="mb-2">{add.details}</p>
                     <div className="d-flex w-100 justify-content-between">
-                      <small>by: {add.user.name}</small>
+                      <p>
+                        <small>by: {add.user.name}</small>
+                        <Link
+                          to={`/profile/${add.user._id}`}
+                          className="badge badge-secondary badge-pill"
+                        >
+                          View profile
+                        </Link>
+                      </p>
                       <Link
                         to={`/advertisement/view/${add._id}`}
                         className="grey-text d-text waves-effect"

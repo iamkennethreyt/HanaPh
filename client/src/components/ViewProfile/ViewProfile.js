@@ -73,7 +73,7 @@ class AddJobAdvertisement extends Component {
         >
           Back
         </u>
-        <h3 className="text-center">Applicant Details</h3>
+        <h3 className="text-center">Profile Details</h3>
         <h4>
           Name : <strong>{name}</strong>
         </h4>
@@ -90,9 +90,7 @@ class AddJobAdvertisement extends Component {
         <p>
           City / Province : <strong>{cityProvince}</strong>
         </p>
-        {resume === "nothing" ? (
-          <h6>No Resume Yet</h6>
-        ) : (
+        {resume === "nothing" ? null : (
           <button
             className="btn btn-outline-secondary"
             onClick={() => this.props.downloadResume(_id, name)}
