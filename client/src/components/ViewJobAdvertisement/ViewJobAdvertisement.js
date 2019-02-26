@@ -29,8 +29,10 @@ class AddJobAdvertisement extends Component {
       applicants: [
         {
           user: {
-            name: ""
-          }
+            name: "",
+            _id: ""
+          },
+          date: Date.now()
         }
       ],
       status: false,
@@ -48,7 +50,6 @@ class AddJobAdvertisement extends Component {
       this.setState({ errors: nextProps.errors });
     }
     if (nextProps.adv) {
-      console.log("======", nextProps.adv);
       const {
         details,
         status,
@@ -170,26 +171,30 @@ class AddJobAdvertisement extends Component {
           </div>
         ) : (
           <ul className="list-group">
-            {this.state.applicants.map((applicant, id) => {
-              return (
-                <li
-                  key={id}
-                  className="list-group-item d-flex justify-content-between align-items-center"
-                >
-                  <p>
-                    {applicant.user.name}
-                    <br className="p-0" />
-                    <small>{moment(applicant.date).format("LLL")}</small>
-                  </p>
-                  <Link
-                    to={`/profile/${applicant.user._id}`}
-                    className="badge badge-secondary badge-pill"
+            {this.state.applicants === undefined ? (
+              <h3>Loading</h3>
+            ) : (
+              this.state.applicants.map((applicant, id) => {
+                return (
+                  <li
+                    key={id}
+                    className="list-group-item d-flex justify-content-between align-items-center"
                   >
-                    View profile
-                  </Link>
-                </li>
-              );
-            })}
+                    <p>
+                      {applicant.user.name}
+                      <br className="p-0" />
+                      <small>{moment(applicant.date).format("LLL")}</small>
+                    </p>
+                    <Link
+                      to={`/profile/${applicant.user._id}`}
+                      className="badge badge-secondary badge-pill"
+                    >
+                      View profile
+                    </Link>
+                  </li>
+                );
+              })
+            )}
           </ul>
         )}
       </div>
