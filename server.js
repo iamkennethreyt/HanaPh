@@ -3,14 +3,11 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const methodOverride = require("method-override");
 const passport = require("passport");
-const cors = require("cors");
 
 const users = require("./routes/api/users");
 const advertisements = require("./routes/api/advertisements");
 
 const app = express();
-app.use(cors());
-
 
 //body parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
