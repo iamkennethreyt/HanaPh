@@ -80,6 +80,8 @@ class AddJobAdvertisement extends Component {
   }
 
   render() {
+    console.log(this.props.adv);
+
     const { user } = this.props.users;
     return (
       <div className="m-3 pt-5 grey-text">
@@ -91,14 +93,16 @@ class AddJobAdvertisement extends Component {
         </button>
 
         <h4>
-          Ads Title :<strong>{this.state.title}</strong>
+          Ads Title :<strong>{this.props.adv.title}</strong>
         </h4>
         <div>
           <p>
-            Category :<strong>{this.state.category}</strong>
+            Category :<strong>{this.props.adv.category}</strong>
           </p>
-          <p>{this.state.details}</p>
-          <small>Date posted : {moment(this.state.date).format("LL")}</small>
+          <p>{this.props.adv.details}</p>
+          <small>
+            Date posted : {moment(this.props.adv.date).format("LL")}
+          </small>
         </div>
         <hr />
         {this.props.auth.user.type === "applicant" ? (
@@ -139,14 +143,14 @@ class AddJobAdvertisement extends Component {
                   Axios.post("/api/advertisements/sendemail", {
                     applicantName: this.props.auth.user.name,
                     applicantEmail: this.props.auth.user.email,
-                    companyname: user.name,
-                    companyemail: user.email,
+                    companyname: this.props.adv.user.name,
+                    companyemail: this.props.adv.user.email,
                     message: `Good day ${
-                      user.name
+                      this.props.adv.user.name
                     } you have a new notification to the advertisement you posted in HanaPH, that Mr/Ms ${
                       this.props.auth.user.name
                     } is applying for ${
-                      this.state.title
+                      this.props.adv.title
                     } position. you can send directly to his email ${
                       this.props.auth.user.email
                     }`

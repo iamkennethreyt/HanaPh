@@ -212,7 +212,7 @@ router.post(
     const { email, message } = req.body;
     const mailOptions = {
       from: email,
-      to: "iamkennethreyt@gmail.com",
+      to: "lope.tohay@swu.edu.ph",
       subject: "Message from your Hanaph App",
       text: message
     };
