@@ -6,6 +6,7 @@ const nodemailer = require("nodemailer");
 const transporter = require("../../config/key").transporter;
 // Advertisement model
 const Advertisement = require("../../models/Advertisement");
+const SerialCode = require("../../models/SerialCode");
 
 // Validation
 const validateAdvertisementInput = require("../../validations/advertisement");
@@ -91,14 +92,20 @@ router.post(
       return res.status(400).json(errors);
     }
 
-    const newAdv = new Advertisement({
-      title: req.body.title,
-      details: req.body.details,
-      category: req.body.category,
-      user: req.user.id
-    });
+    SerialCode.findOne({ serialcode: req.body.serialcode }).then(sc => {
+      if (!sc) {
+        return res.status(400).json({ serialcode: "Serial code is Invalid" });
+      } else {
+        const newAdv = new Advertisement({
+          title: req.body.title,
+          details: req.body.details,
+          category: req.body.category,
+          user: req.user.id
+        });
 
-    newAdv.save().then(adv => res.json(adv));
+        newAdv.save().then(adv => res.json(adv));
+      }
+    });
   }
 );
 

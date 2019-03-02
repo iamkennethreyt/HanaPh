@@ -61,7 +61,7 @@ class HomePage extends Component {
             <h4 className="text-center mt-3">No advertisements yet</h4>
           ) : (
             <div className="container">
-              <h4 className="text-center mt-3">List of Advertisement</h4>
+              <h4 className="text-center mt-3">List of Jobs</h4>
               <div className="md-form mt-0">
                 <input
                   className="form-control"

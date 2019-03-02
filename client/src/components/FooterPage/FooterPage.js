@@ -42,12 +42,20 @@ class FooterPage extends Component {
                   <br />
                   Ads
                 </Link>
+                {this.props.auth.user.type === "admin" ? (
+                  <Link to="/serialcode" className="fb-ic">
+                    <i className="fa fa-barcode fa-lg text-white-50 mr-md-5 mx-4 fa-2x" />
+                    <br />
+                    Code
+                  </Link>
+                ) : (
+                  <Link to="/settings" className="li-ic">
+                    <i className="fa fa-user fa-lg text-white-50 mr-md-5 mx-4 fa-2x" />
+                    <br />
+                    Profile
+                  </Link>
+                )}
 
-                <Link to="/settings" className="li-ic">
-                  <i className="fa fa-cog fa-lg text-white-50 mr-md-5 mx-4 fa-2x" />
-                  <br />
-                  Settings
-                </Link>
                 <Link to="/about" className="gplus-ic">
                   <i className="fa fa-info fa-lg text-white-50 mr-md-5 mx-4 fa-2x" />
                   <br />

@@ -80,16 +80,15 @@ class AddJobAdvertisement extends Component {
   }
 
   render() {
-    const { user } = this.state;
+    const { user } = this.props.users;
     return (
       <div className="m-3 pt-5 grey-text">
-        <u
-          className="mt-2"
-          style={{ cursor: "pointer" }}
+        <button
+          className="mt-3 btn btn-sm purple darken-3"
           onClick={() => this.props.history.goBack()}
         >
           Back
-        </u>
+        </button>
 
         <h4>
           Ads Title :<strong>{this.state.title}</strong>

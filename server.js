@@ -6,6 +6,7 @@ const passport = require("passport");
 
 const users = require("./routes/api/users");
 const advertisements = require("./routes/api/advertisements");
+const serialcodes = require("./routes/api/serialcodes");
 
 const app = express();
 
@@ -32,6 +33,7 @@ require("./config/passport")(passport);
 //use routesadvertisements
 app.use("/api/users", users);
 app.use("/api/advertisements", advertisements);
+app.use("/api/serialcodes", serialcodes);
 
 const port = process.env.PORT || 5000;
 

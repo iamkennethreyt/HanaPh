@@ -66,13 +66,12 @@ class AddJobAdvertisement extends Component {
     } = this.state;
     return (
       <div className="m-3 pt-5 grey-text">
-        <u
-          className="mt-3"
-          style={{ cursor: "pointer" }}
+        <button
+          className="mt-3 btn btn-sm purple darken-3"
           onClick={() => this.props.history.goBack()}
         >
           Back
-        </u>
+        </button>
         <h3 className="text-center">Profile Details</h3>
         <h4>
           Name : <strong>{name}</strong>

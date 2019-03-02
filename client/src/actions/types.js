@@ -10,3 +10,7 @@ export const DELETE_AD = "DELETE_AD";
 export const GET_CURRENT_USER = "GET_CURRENT_USER";
 export const PUT_CURRENT_USER = "PUT_CURRENT_USER";
 export const GET_USER = "GET_USER";
+
+export const ADD_SERIALCODE = "ADD_SERIALCODE";
+export const GET_SERIALCODES = "GET_SERIALCODES";
+export const DELETE_SERIALCODE = "DELETE_SERIALCODE";

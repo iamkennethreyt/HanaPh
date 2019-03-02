@@ -96,7 +96,7 @@ class RegisterApplicant extends Component {
     return (
       <div className="p-2 mt-5 mb-5">
         <form className="border border-light p-2 pb-2" onSubmit={this.onSubmit}>
-          <p className="h4 mb-4">Account Settings</p>
+          <p className="h4 mb-4">Profile Settings</p>
 
           {this.props.auth.user.type === "Applicant" ? (
             <input

@@ -18,6 +18,7 @@ class AddJobAdvertisement extends Component {
       title: "",
       details: "",
       status: true,
+      serialcode: "",
       errors: {}
     };
   }
@@ -54,7 +55,8 @@ class AddJobAdvertisement extends Component {
       title: this.state.title,
       details: this.state.details,
       status: this.state.status,
-      category: this.state.category
+      category: this.state.category,
+      serialcode: this.state.serialcode
     };
 
     // console.log(newJob);
@@ -116,6 +118,18 @@ class AddJobAdvertisement extends Component {
               <div className="invalid-feedback">{errors.category}</div>
             )}
           </div>
+          <input
+            className={classnames("form-control mt-2", {
+              "is-invalid": errors.serialcode
+            })}
+            placeholder="Serial Code"
+            name="serialcode"
+            value={this.state.serialcode}
+            onChange={this.onChange}
+          />
+          {errors.serialcode && (
+            <div className="invalid-feedback">{errors.serialcode}</div>
+          )}
 
           <input
             type="submit"

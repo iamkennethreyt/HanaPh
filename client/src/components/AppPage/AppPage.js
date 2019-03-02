@@ -17,6 +17,7 @@ import ViewJobAdvertisement from "../ViewJobAdvertisement/ViewJobAdvertisement";
 import ViewProfile from "../ViewProfile/ViewProfile";
 import LandingPage from "../LandingPage/LandingPage";
 import AboutPage from "../AboutPage/AboutPage";
+import SerialCodesPage from "../SerialCodesPage/SerialCodesPage";
 
 class AppPage extends Component {
   render() {
@@ -49,6 +50,7 @@ class AppPage extends Component {
               />
 
               <Route exact path="/settings" component={SettingsPage} />
+              <Route exact path="/serialcode" component={SerialCodesPage} />
               <Route
                 exact
                 path="/settings/password"
