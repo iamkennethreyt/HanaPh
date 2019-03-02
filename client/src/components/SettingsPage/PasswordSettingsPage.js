@@ -104,14 +104,14 @@ class RegisterApplicant extends Component {
 
           <button
             type="submit"
-            className="btn btn-block mt-2 purple darken-3  waves-effect"
+            className="btn btn-block mt-2 teal darken-2  waves-effect"
           >
             Save
           </button>
 
           <Link
             to="/settings"
-            className="btn btn-block mt-2 btn-outline-secondary waves-effect"
+            className="btn btn-block mt-2 btn-outline-default waves-effect"
           >
             Cancel
           </Link>

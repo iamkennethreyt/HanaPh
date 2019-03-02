@@ -114,9 +114,9 @@ class HomePage extends Component {
                         </Link>
                         <Link
                           to={`/advertisement/edit/${add._id}`}
-                          className=" purple-text waves-effect"
+                          className=" text-default waves-effect"
                         >
-                          <i className="fa purple-text fa-1x fa-edit mr-1" />{" "}
+                          <i className="fa text-default fa-1x fa-edit mr-1" />{" "}
                           <small>Edit</small>
                         </Link>
                       </div>
@@ -141,18 +141,18 @@ class HomePage extends Component {
                     <div className="d-flex w-100 justify-content-between">
                       <p>
                         <small>by: {add.user.name}</small>
-                        <Link
+                        {/* <Link
                           to={`/profile/${add.user._id}`}
                           className="badge badge-secondary badge-pill"
                         >
                           View profile
-                        </Link>
+                        </Link> */}
                       </p>
                       <Link
                         to={`/advertisement/view/${add._id}`}
-                        className="grey-text d-text waves-effect"
+                        className="text-default d-text waves-effect"
                       >
-                        <i className="fa grey-text fa-1x fa-eye mr-1" />{" "}
+                        <i className="fa text-default fa-1x fa-eye mr-1" />{" "}
                         <small>View</small>
                       </Link>
                     </div>

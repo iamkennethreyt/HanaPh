@@ -204,21 +204,21 @@ class RegisterApplicant extends Component {
 
           <button
             type="submit"
-            className="btn btn-block mt-2 purple darken-3  waves-effect"
+            className="btn btn-block mt-2 teal darken-2  waves-effect"
           >
             Save
           </button>
 
           <Link
             to="/"
-            className="btn btn-block mt-2 btn-outline-secondary waves-effect"
+            className="btn btn-block mt-2 btn-outline-default waves-effect"
           >
             Cancel
           </Link>
 
           <Link
             to="/settings/password"
-            className="btn btn-block mt-2 purple darken-3 waves-effect"
+            className="btn btn-block mt-2 teal darken-2 waves-effect"
           >
             Password Settings
           </Link>
@@ -286,7 +286,7 @@ class RegisterApplicant extends Component {
               <input
                 type="submit"
                 value="Upload Resume"
-                className="btn mt-1 purple darken-3 btn-block"
+                className="btn mt-1 teal darken-2 btn-block"
               />
             </form>
           </div>

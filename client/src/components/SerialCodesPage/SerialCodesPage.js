@@ -63,7 +63,7 @@ class SerialCodesPage extends Component {
           {errors.serialcode && (
             <div className="invalid-feedback">{errors.serialcode}</div>
           )}
-          <button className="btn purple btn-block mt-2" type="submit">
+          <button className="btn teal darken-2 btn-block mt-2" type="submit">
             Submit
           </button>
         </form>
@@ -75,7 +75,7 @@ class SerialCodesPage extends Component {
             >
               {sc.serialcode}
               <button
-                className="btn btn-sm btn-danger"
+                className="btn btn-sm btn-outline-default"
                 onClick={() => {
                   this.props.deleteSerialCode(sc._id);
                 }}

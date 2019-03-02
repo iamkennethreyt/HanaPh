@@ -21,7 +21,7 @@ class AboutPAge extends Component {
       <div className="p-2 mt-5">
         <div className="text-center text-black-50 mt-5">
           <h2 className="font-weight-bold">
-            About <span className="purple-text">Hana</span>Ph
+            About <span className="text-default">Hana</span>Ph
           </h2>
           {this.props.auth.user.name}
           <p className="text-justify">
@@ -72,10 +72,7 @@ class AboutPAge extends Component {
               onChange={e => this.setState({ message: e.target.value })}
             />
 
-            <button
-              className="btn purple darken-3 btn-block mt-2"
-              type="submit"
-            >
+            <button className="btn teal darken-2 btn-block mt-2" type="submit">
               Send
             </button>
           </form>

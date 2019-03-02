@@ -28,7 +28,7 @@ class FooterPage extends Component {
     return (
       <React.Fragment>
         <div style={{ height: "50px" }} />
-        <footer className="page-footer font-small purple darken-3 fixed-bottom text-center">
+        <footer className="page-footer font-small teal darken-2 fixed-bottom text-center">
           <div className="row">
             <div className="col-md-12">
               <div className="py-3 flex-center">
@@ -49,18 +49,18 @@ class FooterPage extends Component {
                     Code
                   </Link>
                 ) : (
-                  <Link to="/settings" className="li-ic">
-                    <i className="fa fa-user fa-lg text-white-50 mr-md-5 mx-4 fa-2x" />
+                  <Link to="/about" className="gplus-ic">
+                    <i className="fa fa-info fa-lg text-white-50 mr-md-5 mx-4 fa-2x" />
                     <br />
-                    Profile
+                    About
                   </Link>
                 )}
-
-                <Link to="/about" className="gplus-ic">
-                  <i className="fa fa-info fa-lg text-white-50 mr-md-5 mx-4 fa-2x" />
+                <Link to="/settings" className="li-ic">
+                  <i className="fa fa-user fa-lg text-white-50 mr-md-5 mx-4 fa-2x" />
                   <br />
-                  About
+                  Profile
                 </Link>
+
                 <p
                   className="li-ic"
                   onClick={this.onLogout}

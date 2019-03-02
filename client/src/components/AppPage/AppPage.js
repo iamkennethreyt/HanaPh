@@ -29,6 +29,7 @@ class AppPage extends Component {
           {isAuthenticated ? (
             <React.Fragment>
               <NavPage />
+              <div style={{ height: "20px" }} />
               {/* <HomePage /> */}
               <Route exact path="/" component={HomePage} />
               <Route

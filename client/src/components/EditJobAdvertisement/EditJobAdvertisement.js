@@ -114,7 +114,7 @@ class AddJobAdvertisement extends Component {
 
           <input
             type="submit"
-            className="btn btn-block mt-2 purple darken-3  waves-effect"
+            className="btn btn-block mt-2 teal darken-2  waves-effect"
             name="submit"
           />
           <Link

@@ -67,7 +67,7 @@ class AddJobAdvertisement extends Component {
     return (
       <div className="m-3 pt-5 grey-text">
         <button
-          className="mt-3 btn btn-sm purple darken-3"
+          className="mt-3 btn btn-sm teal darken-2"
           onClick={() => this.props.history.goBack()}
         >
           Back

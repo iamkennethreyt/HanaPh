@@ -8,7 +8,7 @@ export default class RegisterPage extends Component {
         <div className="p-2 mt-5">
           <div className="text-center text-black-50 ">
             <h1 className="font-weight-bold">
-              <span className="purple-text">Hana</span>Ph
+              <span className="text-default">Hana</span>Ph
             </h1>
           </div>
           <div className="text-center border border-light p-2">
@@ -16,21 +16,21 @@ export default class RegisterPage extends Component {
 
             <Link
               to="/register/applicant"
-              className="btn btn-block mt-2 purple darken-3  waves-effect"
+              className="btn btn-block mt-2 teal darken-2  waves-effect"
             >
               Applicant
             </Link>
 
             <Link
               to="/register/employer"
-              className="btn btn-block mt-2 purple darken-3  waves-effect"
+              className="btn btn-block mt-2 teal darken-2  waves-effect"
             >
               Employer
             </Link>
 
             <Link
               to="/"
-              className="btn btn-block mt-2 btn-outline-secondary waves-effect"
+              className="btn btn-block mt-2 btn-outline-default waves-effect"
             >
               Cancel
             </Link>

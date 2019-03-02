@@ -16,7 +16,7 @@ class LandingPage extends Component {
       <div className="p-2 mt-5">
         <div className="text-center text-black-50 mt-5">
           <h2 className="font-weight-bold">
-            Welcome to <span className="purple-text">Hana</span>Ph
+            Welcome to <span className="text-default">Hana</span>Ph
             <br />
             {this.props.auth.user.name}
           </h2>

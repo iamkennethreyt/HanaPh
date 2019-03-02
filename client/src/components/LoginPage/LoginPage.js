@@ -53,7 +53,7 @@ class Login extends Component {
       <div className="p-2 mt-5">
         <div className="text-center text-black-50 ">
           <h1 className="font-weight-bold">
-            <span className="purple-text">Hana</span>Ph
+            <span className="text-default">Hana</span>Ph
           </h1>
         </div>
         <form
@@ -88,11 +88,11 @@ class Login extends Component {
           {errors.password && (
             <div className="invalid-feedback">{errors.password}</div>
           )}
-          <button className="btn purple btn-block mt-2" type="submit">
+          <button className="btn teal darken-2 btn-block mt-2" type="submit">
             Sign in
           </button>
           <Link
-            className="btn btn-outline-secondary btn-block mt-2"
+            className="btn btn-outline-default btn-block mt-2"
             to="/register"
           >
             Register

@@ -6,7 +6,7 @@ class ButtonPage extends Component {
     return (
       <Link
         to="/advertisement/add"
-        className="float purple darken-3 btn-lg"
+        className="float teal darken-2 btn-lg"
         style={{
           position: "fixed",
           width: "60px",

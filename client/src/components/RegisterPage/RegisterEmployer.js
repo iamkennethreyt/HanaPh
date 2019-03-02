@@ -72,7 +72,7 @@ class RegisterEmployer extends Component {
       <div className="p-2 mt-5">
         <div className="text-center text-black-50 ">
           <h1 className="font-weight-bold">
-            <span className="purple-text">Hana</span>Ph
+            <span className="text-default">Hana</span>Ph
           </h1>
         </div>
         <form className="border border-light p-2" onSubmit={this.onSubmit}>
@@ -172,14 +172,14 @@ class RegisterEmployer extends Component {
 
           <button
             type="submit"
-            className="btn btn-block mt-2 purple darken-3  waves-effect"
+            className="btn btn-block mt-2 teal darken-2  waves-effect"
           >
             Save
           </button>
 
           <Link
             to="/register"
-            className="btn btn-block mt-2 btn-outline-secondary waves-effect"
+            className="btn btn-block mt-2 btn-outline-default waves-effect"
           >
             Cancel
           </Link>
