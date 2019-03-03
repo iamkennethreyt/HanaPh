@@ -40,7 +40,7 @@ class FooterPage extends Component {
                 <Link to="/" className="fb-ic">
                   <i className="fa fa-bullhorn fa-lg text-white-50 mr-md-5 mx-4 fa-2x" />
                   <br />
-                  Ads
+                  Jobs
                 </Link>
                 {this.props.auth.user.type === "admin" ? (
                   <Link to="/serialcode" className="fb-ic">
@@ -52,7 +52,7 @@ class FooterPage extends Component {
                   <Link to="/about" className="gplus-ic">
                     <i className="fa fa-info fa-lg text-white-50 mr-md-5 mx-4 fa-2x" />
                     <br />
-                    About
+                    ContactUs
                   </Link>
                 )}
                 <Link to="/settings" className="li-ic">

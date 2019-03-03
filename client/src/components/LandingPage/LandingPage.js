@@ -21,6 +21,21 @@ class LandingPage extends Component {
             {this.props.auth.user.name}
           </h2>
           <p className="text-justify">{this.props.auth.user.details}</p>
+          <p className="font-weight-bold"> <b>
+          HanaPH is a mobile application, which allows you to find your dream jobs. 
+          The application simplifies your job search and find work in the Philippines at your fingertips. 
+          Act fast and browse thousands of classified jobs part-time and full-time jobs. 
+          Jobs seekers get access to the latest jobs listings.
+          </b> </p>
+          <p className="font-weight-bold"> <i>
+
+          </i> </p>
+          <p className="font-weight-bold"> <i>
+
+          </i> </p>
+          <p className="font-weight-bold"> <i>
+          "I never dreamed about success. I worked for it." — Estee Lauder
+          </i> </p>
         </div>
       </div>
     );
