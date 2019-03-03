@@ -93,7 +93,7 @@ class AddJobAdvertisement extends Component {
         </button>
 
         <h4>
-          Ads Title :<strong>{this.props.adv.title}</strong>
+          Job Title :<strong>{this.props.adv.title}</strong>
         </h4>
         <div>
           <p>
@@ -169,7 +169,7 @@ class AddJobAdvertisement extends Component {
                 }
               }}
             >
-              Apply THIS Advertisement
+              Apply to this Job
             </button>
           </div>
         ) : (
