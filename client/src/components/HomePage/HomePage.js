@@ -85,7 +85,9 @@ class HomePage extends Component {
                       className="list-group-item list-group-item-action flex-column align-items-start"
                     >
                       <div className="d-flex w-100 justify-content-between">
-                        <h5 className="mb-2 h5">{add.title}</h5>
+                        <h5 className="mb-2 h5">
+                          {add.category} {add.title}
+                        </h5>
                         <small>{moment(add.date).format("LL")}</small>
                       </div>
                       <p className="mb-2">{add.details}</p>
@@ -94,9 +96,7 @@ class HomePage extends Component {
                           {add.applicants.length} new applicant(s)
                         </p>
                       )}
-                      <small className="grey-text">
-                        Category : {add.category}
-                      </small>
+                      <small className="grey-text">Field : {add.field}</small>
                       <div className="d-flex justify-content-between">
                         <div
                           className="red-text d-text waves-effect"
@@ -130,12 +130,12 @@ class HomePage extends Component {
                     className="list-group-item list-group-item-action flex-column align-items-start"
                   >
                     <div className="d-flex w-100 justify-content-between">
-                      <h5 className="mb-2 h5">{add.title}</h5>
+                      <h5 className="mb-2 h5">
+                        {add.category} {add.title}
+                      </h5>
                       <small>{moment(add.date).format("LL")}</small>
                     </div>
-                    <small className="grey-text">
-                      Category : {add.category}
-                    </small>
+                    <small className="grey-text">Field : {add.field}</small>
 
                     <p className="mb-2">{add.details}</p>
                     <div className="d-flex w-100 justify-content-between">

@@ -15,6 +15,7 @@ class AddJobAdvertisement extends Component {
     super();
     this.state = {
       category: "",
+      field: "",
       title: "",
       details: "",
       status: true,
@@ -56,6 +57,7 @@ class AddJobAdvertisement extends Component {
       details: this.state.details,
       status: this.state.status,
       category: this.state.category,
+      field: this.state.field,
       serialcode: this.state.serialcode
     };
 
@@ -105,19 +107,47 @@ class AddJobAdvertisement extends Component {
               value={this.state.category}
               onChange={this.onChange}
             >
-              <option hidden>Categories</option>
-              {["Accounting/Finance", "Call Center", "Computer/IT"].map(
-                option => (
-                  <option key={option} value={option}>
-                    {option}
-                  </option>
-                )
-              )}
+              <option hidden>Category Type</option>
+              {["Full Time", "Part Time"].map(option => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
             </select>
             {errors.category && (
               <div className="invalid-feedback">{errors.category}</div>
             )}
           </div>
+
+          <div className="form-group mt-2">
+            <select
+              id="field"
+              className={classnames("form-control form-control-lg", {
+                "is-invalid": errors.field
+              })}
+              name="field"
+              value={this.state.field}
+              onChange={this.onChange}
+            >
+              <option hidden>Field Category</option>
+              {[
+                "Accounting/Finance",
+                "Call Center/BPO",
+                "Food/Restaurant",
+                "HR/Recruitment",
+                "IT/Computers",
+                "Prouduction/Manufacturing"
+              ].map(option => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+            {errors.field && (
+              <div className="invalid-feedback">{errors.field}</div>
+            )}
+          </div>
+
           <input
             className={classnames("form-control mt-2", {
               "is-invalid": errors.serialcode

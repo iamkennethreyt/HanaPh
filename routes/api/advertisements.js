@@ -100,6 +100,7 @@ router.post(
           title: req.body.title,
           details: req.body.details,
           category: req.body.category,
+          field: req.body.field,
           user: req.user.id
         });
 
@@ -130,6 +131,7 @@ router.put(
     if (req.body.details) advFields.details = req.body.details;
     if (req.body.status) advFields.status = req.body.status;
     if (req.body.category) advFields.category = req.body.category;
+    if (req.body.field) advFields.field = req.body.field;
 
     Advertisement.findOneAndUpdate(
       { user: req.user.id },

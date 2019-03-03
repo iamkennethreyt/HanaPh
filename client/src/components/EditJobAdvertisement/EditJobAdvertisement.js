@@ -18,6 +18,7 @@ class AddJobAdvertisement extends Component {
       details: "",
       status: false,
       category: "",
+      field: "",
       errors: {}
     };
   }
@@ -53,6 +54,7 @@ class AddJobAdvertisement extends Component {
       title: this.state.title,
       details: this.state.details,
       status: this.state.status,
+      field: this.state.field,
       category: this.state.category
     };
 
@@ -101,14 +103,38 @@ class AddJobAdvertisement extends Component {
               value={this.state.category}
               onChange={this.onChange}
             >
-              <option hidden>Categories</option>
-              {["Accounting/Finance", "Call Center", "Computer/IT"].map(
-                option => (
-                  <option key={option} value={option}>
-                    {option}
-                  </option>
-                )
-              )}
+              <option hidden>Category Type</option>
+              {["Full Time", "Part Time"].map(option => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="form-group mt-2">
+            <select
+              id="field"
+              className={classnames("form-control form-control-lg", {
+                "is-invalid": errors.field
+              })}
+              name="field"
+              value={this.state.field}
+              onChange={this.onChange}
+            >
+              <option hidden>Field Category</option>
+              {[
+                "Accounting/Finance",
+                "Call Center/BPO",
+                "Food/Restaurant",
+                "HR/Recruitment",
+                "IT/Computers",
+                "Prouduction/Manufacturing"
+              ].map(option => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
             </select>
           </div>
 

@@ -8,6 +8,7 @@ import {
 } from "../../actions/serialCodeActions";
 import { withRouter } from "react-router-dom";
 import classnames from "classnames";
+import { confirmAlert } from "react-confirm-alert"; // Import
 
 class SerialCodesPage extends Component {
   constructor() {
@@ -77,7 +78,20 @@ class SerialCodesPage extends Component {
               <button
                 className="btn btn-sm btn-outline-default"
                 onClick={() => {
-                  this.props.deleteSerialCode(sc._id);
+                  confirmAlert({
+                    message: "Are you sure to delete this serial code",
+                    buttons: [
+                      {
+                        label: "Ok",
+                        onClick: () => {
+                          this.props.deleteSerialCode(sc._id);
+                        }
+                      },
+                      {
+                        label: "Cancel"
+                      }
+                    ]
+                  });
                 }}
               >
                 delete
