@@ -77,7 +77,7 @@ class HomePage extends Component {
           )}
           {this.props.auth.user.type === "employer"
             ? advertisements
-                .filter(ads => this.props.auth.user.id === ads.user._id)
+                // .filter(ads => this.props.auth.user.id === ads.user._id)
                 .map((add, key) => {
                   return (
                     <li
@@ -92,19 +92,28 @@ class HomePage extends Component {
                       </div>
                       <p className="mb-2">{add.details}</p>
                       {add.applicants.length === 0 ? null : (
-                        <p className="m-1 text-primary">
-                          {add.applicants.length} new applicant(s)
-                        </p>
+                        <div>
+                          {this.props.auth.user.id == add.user._id ? (
+                            <p className="m-1 text-primary">
+                              {add.applicants.length} new applicant(s)
+                            </p>
+                          ) : null}
+                        </div>
                       )}
                       <small className="grey-text">Field : {add.field}</small>
                       <div className="d-flex justify-content-between">
-                        <div
-                          className="red-text d-text waves-effect"
-                          onClick={this.onDelete.bind(this, add._id)}
-                        >
-                          <i className="fa  fa-1x fa-trash mr-1" />{" "}
-                          <small>Delete</small>
-                        </div>
+                        {/* {console.log(add.user._id)}
+                        {console.log("awww", this.props.auth.user.id)} */}
+                        {add.user._id == this.props.auth.user.id ? (
+                          <div
+                            className="red-text d-text waves-effect"
+                            onClick={this.onDelete.bind(this, add._id)}
+                          >
+                            <i className="fa  fa-1x fa-trash mr-1" />{" "}
+                            <small>Delete</small>
+                          </div>
+                        ) : null}
+
                         <Link
                           to={`/advertisement/view/${add._id}`}
                           className="grey-text d-text waves-effect"
@@ -112,13 +121,15 @@ class HomePage extends Component {
                           <i className="fa grey-text fa-1x fa-eye mr-1" />{" "}
                           <small>View</small>
                         </Link>
-                        <Link
-                          to={`/advertisement/edit/${add._id}`}
-                          className=" text-default waves-effect"
-                        >
-                          <i className="fa text-default fa-1x fa-edit mr-1" />{" "}
-                          <small>Edit</small>
-                        </Link>
+                        {add.user._id == this.props.auth.user.id ? (
+                          <Link
+                            to={`/advertisement/edit/${add._id}`}
+                            className=" text-default waves-effect"
+                          >
+                            <i className="fa text-default fa-1x fa-edit mr-1" />{" "}
+                            <small>Edit</small>
+                          </Link>
+                        ) : null}
                       </div>
                     </li>
                   );
@@ -141,12 +152,6 @@ class HomePage extends Component {
                     <div className="d-flex w-100 justify-content-between">
                       <p>
                         <small>by: {add.user.name}</small>
-                        {/* <Link
-                          to={`/profile/${add.user._id}`}
-                          className="badge badge-secondary badge-pill"
-                        >
-                          View profile
-                        </Link> */}
                       </p>
                       <Link
                         to={`/advertisement/view/${add._id}`}

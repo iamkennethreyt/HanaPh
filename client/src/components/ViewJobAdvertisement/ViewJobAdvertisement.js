@@ -93,11 +93,11 @@ class AddJobAdvertisement extends Component {
         </button>
 
         <h4>
-          Job Title :<strong>{this.props.adv.title}</strong>
+          {this.props.adv.category} <strong>{this.props.adv.title}</strong>
         </h4>
         <div>
           <p>
-            Category :<strong>{this.props.adv.category}</strong>
+            Field :<strong>{this.props.adv.field}</strong>
           </p>
           <p>{this.props.adv.details}</p>
           <small>
@@ -105,9 +105,9 @@ class AddJobAdvertisement extends Component {
           </small>
         </div>
         <hr />
-        {this.props.auth.user.type === "applicant" ? (
+        {this.props.auth.user.id !== user.id ? (
           <div className="mb-5 pb-5">
-            <h6 className="text-center">Emplyer Details</h6>
+            <h6 className="text-center">Employer Details</h6>
             <h4>{user.name}</h4>
 
             <p>
@@ -126,51 +126,53 @@ class AddJobAdvertisement extends Component {
             <small>
               Company Address :<strong>{user.completeAddress}</strong>
             </small>
-            <button
-              className="btn btn-block btn-sm btn-outline-secondary"
-              onClick={() => {
-                if (this.state.resume === "nothing") {
-                  confirmAlert({
-                    message:
-                      "You haven't upload resume yet please upload resume before apply this advertisement",
-                    buttons: [
-                      {
-                        label: "Ok"
-                      }
-                    ]
-                  });
-                } else {
-                  Axios.post("/api/advertisements/sendemail", {
-                    applicantName: this.props.auth.user.name,
-                    applicantEmail: this.props.auth.user.email,
-                    companyname: this.props.adv.user.name,
-                    companyemail: this.props.adv.user.email,
-                    message: `Good day ${
-                      this.props.adv.user.name
-                    } you have a new notification to the advertisement you posted in HanaPH, that Mr/Ms ${
-                      this.props.auth.user.name
-                    } is applying for ${
-                      this.props.adv.title
-                    } position. you can send directly to his email ${
-                      this.props.auth.user.email
-                    }`
-                  }).then(res => console.log(res.data));
+            {this.props.auth.user.type === "applicant" ? (
+              <button
+                className="btn btn-block btn-sm btn-outline-default"
+                onClick={() => {
+                  if (this.state.resume === "nothing") {
+                    confirmAlert({
+                      message:
+                        "You haven't upload resume yet please upload resume before apply this advertisement",
+                      buttons: [
+                        {
+                          label: "Ok"
+                        }
+                      ]
+                    });
+                  } else {
+                    Axios.post("/api/advertisements/sendemail", {
+                      applicantName: this.props.auth.user.name,
+                      applicantEmail: this.props.auth.user.email,
+                      companyname: this.props.adv.user.name,
+                      companyemail: this.props.adv.user.email,
+                      message: `Good day ${
+                        this.props.adv.user.name
+                      } you have a new notification to the advertisement you posted in HanaPH, that Mr/Ms ${
+                        this.props.auth.user.name
+                      } is applying for ${
+                        this.props.adv.title
+                      } position. you can send directly to his email ${
+                        this.props.auth.user.email
+                      }`
+                    }).then(res => console.log(res.data));
 
-                  this.props.submitApplication(this.state._id);
-                  confirmAlert({
-                    message:
-                      "You had successfully apply this advertisement to the employer",
-                    buttons: [
-                      {
-                        label: "Ok"
-                      }
-                    ]
-                  });
-                }
-              }}
-            >
-              Apply to this Job
-            </button>
+                    this.props.submitApplication(this.state._id);
+                    confirmAlert({
+                      message:
+                        "You had successfully apply this advertisement to the employer",
+                      buttons: [
+                        {
+                          label: "Ok"
+                        }
+                      ]
+                    });
+                  }
+                }}
+              >
+                Apply to this Job
+              </button>
+            ) : null}
           </div>
         ) : (
           <ul className="list-group">
