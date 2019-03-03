@@ -49,28 +49,6 @@ class AddJobAdvertisement extends Component {
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
     }
-    if (nextProps.adv) {
-      const {
-        details,
-        status,
-        title,
-        _id,
-        category,
-        user,
-        applicants,
-        date
-      } = nextProps.adv;
-      this.setState({
-        _id,
-        details,
-        status,
-        title,
-        category,
-        user,
-        applicants,
-        date
-      });
-    }
 
     if (nextProps.users) {
       this.setState({
@@ -80,7 +58,37 @@ class AddJobAdvertisement extends Component {
   }
 
   render() {
-    console.log(this.props.adv);
+    console.log(this.props.adv.user);
+
+    let displayapp;
+
+    if (
+      this.props.adv.applicants === undefined ||
+      this.props.adv.applicants === null
+    ) {
+      displayapp = <h1>Loading</h1>;
+    } else {
+      displayapp = this.props.adv.applicants.map((applicant, id) => {
+        return (
+          <li
+            key={id}
+            className="list-group-item d-flex justify-content-between align-items-center"
+          >
+            <p>
+              {applicant.user.name}
+              <br className="p-0" />
+              <small>{moment(applicant.date).format("LLL")}</small>
+            </p>
+            <Link
+              to={`/profile/${applicant.user._id}`}
+              className="btn btn-sm teal darken-2"
+            >
+              View profile
+            </Link>
+          </li>
+        );
+      });
+    }
 
     const { user } = this.props.users;
     return (
@@ -105,103 +113,89 @@ class AddJobAdvertisement extends Component {
           </small>
         </div>
         <hr />
-        {this.props.auth.user.id !== user.id ? (
-          <div className="mb-5 pb-5">
-            <h6 className="text-center">Employer Details</h6>
-            <h4>{user.name}</h4>
+        <div>
+          {this.props.adv.user === undefined || this.props.adv.user === null ? (
+            <h1>Loading...</h1>
+          ) : (
+            <div>
+              {this.props.adv.user._id == this.props.auth.user.id ? (
+                <ul className="list-group">{displayapp}</ul>
+              ) : (
+                <div className="mb-5 pb-5">
+                  <h6 className="text-center">Employer Details</h6>
+                  <h4>{this.props.adv.user.name}</h4>
 
-            <p>
-              About the Company : <br />
-              {user.details}
-            </p>
-            <small>
-              {" "}
-              Comapany Email : <strong>{user.email}</strong>
-            </small>
-            <br />
-            <small>
-              Contact Info : <strong>{user.contactInfo}</strong>
-            </small>
-            <br />
-            <small>
-              Company Address :<strong>{user.completeAddress}</strong>
-            </small>
-            {this.props.auth.user.type === "applicant" ? (
-              <button
-                className="btn btn-block btn-sm btn-outline-default"
-                onClick={() => {
-                  if (this.state.resume === "nothing") {
-                    confirmAlert({
-                      message:
-                        "You haven't upload resume yet please upload resume before apply this advertisement",
-                      buttons: [
-                        {
-                          label: "Ok"
-                        }
-                      ]
-                    });
-                  } else {
-                    Axios.post("/api/advertisements/sendemail", {
-                      applicantName: this.props.auth.user.name,
-                      applicantEmail: this.props.auth.user.email,
-                      companyname: this.props.adv.user.name,
-                      companyemail: this.props.adv.user.email,
-                      message: `Good day ${
-                        this.props.adv.user.name
-                      } you have a new notification to the advertisement you posted in HanaPH, that Mr/Ms ${
-                        this.props.auth.user.name
-                      } is applying for ${
-                        this.props.adv.title
-                      } position. you can send directly to his email ${
-                        this.props.auth.user.email
-                      }`
-                    }).then(res => console.log(res.data));
+                  <p>
+                    About the Company : <br />
+                    {this.props.adv.user.details}
+                  </p>
+                  <small>
+                    {" "}
+                    Comapany Email :{" "}
+                    <strong>{this.props.adv.user.email}</strong>
+                  </small>
+                  <br />
+                  <small>
+                    Contact Info :{" "}
+                    <strong>{this.props.adv.user.contactInfo}</strong>
+                  </small>
+                  <br />
+                  <small>
+                    Company Address :
+                    <strong>{this.props.adv.user.completeAddress}</strong>
+                  </small>
+                  {this.props.auth.user.type === "applicant" ? (
+                    <button
+                      className="btn btn-block btn-sm btn-outline-default"
+                      onClick={() => {
+                        if (this.state.resume === "nothing") {
+                          confirmAlert({
+                            message:
+                              "You haven't upload resume yet please upload resume before apply this advertisement",
+                            buttons: [
+                              {
+                                label: "Ok"
+                              }
+                            ]
+                          });
+                        } else {
+                          Axios.post("/api/advertisements/sendemail", {
+                            applicantName: this.props.auth.user.name,
+                            applicantEmail: this.props.auth.user.email,
+                            companyname: this.props.adv.user.name,
+                            companyemail: this.props.adv.user.email,
+                            message: `Good day ${
+                              this.props.adv.user.name
+                            } you have a new notification to the advertisement you posted in HanaPH, that Mr/Ms ${
+                              this.props.auth.user.name
+                            } is applying for ${
+                              this.props.adv.title
+                            } position. you can send directly to his email ${
+                              this.props.auth.user.email
+                            }`
+                          }).then(res => console.log(res.data));
 
-                    this.props.submitApplication(this.state._id);
-                    confirmAlert({
-                      message:
-                        "You had successfully apply this advertisement to the employer",
-                      buttons: [
-                        {
-                          label: "Ok"
+                          this.props.submitApplication(this.state._id);
+                          confirmAlert({
+                            message:
+                              "You had successfully apply this advertisement to the employer",
+                            buttons: [
+                              {
+                                label: "Ok"
+                              }
+                            ]
+                          });
                         }
-                      ]
-                    });
-                  }
-                }}
-              >
-                Apply to this Job
-              </button>
-            ) : null}
-          </div>
-        ) : (
-          <ul className="list-group">
-            {this.state.applicants === undefined ? (
-              <h3>Loading</h3>
-            ) : (
-              this.state.applicants.map((applicant, id) => {
-                return (
-                  <li
-                    key={id}
-                    className="list-group-item d-flex justify-content-between align-items-center"
-                  >
-                    <p>
-                      {applicant.user.name}
-                      <br className="p-0" />
-                      <small>{moment(applicant.date).format("LLL")}</small>
-                    </p>
-                    <Link
-                      to={`/profile/${applicant.user._id}`}
-                      className="badge badge-secondary badge-pill"
+                      }}
                     >
-                      View profile
-                    </Link>
-                  </li>
-                );
-              })
-            )}
-          </ul>
-        )}
+                      Apply to this Job
+                    </button>
+                  ) : null}
+                </div>
+              )}
+            </div>
+          )}
+        </div>
       </div>
     );
   }
