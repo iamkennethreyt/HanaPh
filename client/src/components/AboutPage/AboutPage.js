@@ -21,9 +21,9 @@ class AboutPAge extends Component {
       <div className="p-2 mt-5">
         <div className="text-center text-black-50 mt-5">
           <h2 className="font-weight-bold">
-            About <span className="text-default">Hana</span>Ph
+            Contact <span className="text-default">Us</span>
           </h2>
-          {this.props.auth.user.name}
+         
           <p className="text-justify">
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
