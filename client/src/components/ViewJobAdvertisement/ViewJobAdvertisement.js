@@ -58,8 +58,6 @@ class AddJobAdvertisement extends Component {
   }
 
   render() {
-    console.log(this.props.adv.user);
-
     let displayapp;
 
     if (
@@ -90,7 +88,6 @@ class AddJobAdvertisement extends Component {
       });
     }
 
-    const { user } = this.props.users;
     return (
       <div className="m-3 pt-5 grey-text">
         <button
@@ -118,7 +115,7 @@ class AddJobAdvertisement extends Component {
             <h1>Loading...</h1>
           ) : (
             <div>
-              {this.props.adv.user._id == this.props.auth.user.id ? (
+              {this.props.adv.user._id === this.props.auth.user.id ? (
                 <ul className="list-group">{displayapp}</ul>
               ) : (
                 <div className="mb-5 pb-5">
@@ -175,7 +172,7 @@ class AddJobAdvertisement extends Component {
                             }`
                           }).then(res => console.log(res.data));
 
-                          this.props.submitApplication(this.state._id);
+                          this.props.submitApplication(this.props.adv._id);
                           confirmAlert({
                             message:
                               "You had successfully apply this advertisement to the employer",

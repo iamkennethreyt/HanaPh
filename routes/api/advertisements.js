@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const passport = require("passport");
-const nodemailer = require("nodemailer");
 
 const transporter = require("../../config/key").transporter;
 // Advertisement model
@@ -144,16 +143,12 @@ router.put(
 // @route   PUT api/advertisements/:id
 // @desc    submit application in current advertisement based on the params id
 // @access  Private
-router.put(
-  "/apply/:id",
+router.post(
+  "/submitapplication/:myid",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    Advertisement.findOne({ _id: req.params.id }).then(ads => {
-      const newApplicant = {
-        user: req.user.id,
-        message: req.body.message
-      };
-      ads.applicants.unshift(newApplicant);
+    Advertisement.findOne({ _id: req.params.myid }).then(ads => {
+      ads.applicants.unshift({ user: req.user.id });
       ads.save().then(ads => res.json(ads));
     });
   }
@@ -216,7 +211,9 @@ router.post(
       from: email,
       to: "HanaPH2019@gmail.com",
       subject: "Message from your Hanaph App",
-      text: message
+      text: `you have a new email from ${email},
+      
+            ${message}`
     };
 
     transporter.sendMail(mailOptions, (error, info) => {
