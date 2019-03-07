@@ -214,7 +214,7 @@ router.post(
     const { email, message } = req.body;
     const mailOptions = {
       from: email,
-      to: "HannaPH2019@gmail.com",
+      to: "HanaPH2019@gmail.com",
       subject: "Message from your Hanaph App",
       text: message
     };
