@@ -211,7 +211,9 @@ router.post(
       from: email,
       to: "HanaPH2019@gmail.com",
       subject: "Message from your Hanaph App",
-      text: message
+      text: `you have a new email from ${email},
+      
+            ${message}`
     };
 
     transporter.sendMail(mailOptions, (error, info) => {
