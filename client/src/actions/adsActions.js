@@ -90,7 +90,9 @@ export const deleteAd = id => dispatch => {
 };
 
 export const submitApplication = id => dispatch => {
-  axios.put(`/api/advertisements/apply/${id}`).catch(err =>
+  // console.log(id);
+  // const myid = "5c807699827cb134a44a15b4";
+  axios.post(`/api/advertisements/submitapplication/${id}`).catch(err =>
     dispatch({
       type: GET_ERRORS,
       payload: err.response.data

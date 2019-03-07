@@ -20,8 +20,8 @@ const AdvertisementSchema = new Schema({
     required: true
   },
   field: {
-    type: String,
-    required: true
+    type: String
+    // required: true
   },
   applicants: [
     {

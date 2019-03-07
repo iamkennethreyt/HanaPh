@@ -93,7 +93,7 @@ class HomePage extends Component {
                       <p className="mb-2">{add.details}</p>
                       {add.applicants.length === 0 ? null : (
                         <div>
-                          {this.props.auth.user.id == add.user._id ? (
+                          {this.props.auth.user.id === add.user._id ? (
                             <p className="m-1 text-primary">
                               {add.applicants.length} new applicant(s)
                             </p>
@@ -104,7 +104,7 @@ class HomePage extends Component {
                       <div className="d-flex justify-content-between">
                         {/* {console.log(add.user._id)}
                         {console.log("awww", this.props.auth.user.id)} */}
-                        {add.user._id == this.props.auth.user.id ? (
+                        {add.user._id === this.props.auth.user.id ? (
                           <div
                             className="red-text d-text waves-effect"
                             onClick={this.onDelete.bind(this, add._id)}
@@ -121,7 +121,7 @@ class HomePage extends Component {
                           <i className="fa grey-text fa-1x fa-eye mr-1" />{" "}
                           <small>View</small>
                         </Link>
-                        {add.user._id == this.props.auth.user.id ? (
+                        {add.user._id === this.props.auth.user.id ? (
                           <Link
                             to={`/advertisement/edit/${add._id}`}
                             className=" text-default waves-effect"
