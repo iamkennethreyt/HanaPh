@@ -128,7 +128,7 @@ class AddJobAdvertisement extends Component {
                   </p>
                   <small>
                     {" "}
-                    Comapany Email :{" "}
+                    Company Email :{" "}
                     <strong>{this.props.adv.user.email}</strong>
                   </small>
                   <br />
