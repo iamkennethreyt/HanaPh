@@ -109,7 +109,7 @@ class RegisterApplicant extends Component {
             className={classnames("form-control mt-2", {
               "is-invalid": errors.contactInfo
             })}
-            placeholder="Contact Info"
+            placeholder="Phone Number"
             name="contactInfo"
             value={this.state.contactInfo}
             onChange={this.onChange}

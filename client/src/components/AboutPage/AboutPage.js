@@ -23,10 +23,8 @@ class AboutPAge extends Component {
           <h2 className="font-weight-bold">
             Contact <span className="text-default">Us</span>
           </h2>
-         
-        <p className="text-justify">
-           
-          </p> 
+        
+          
           <form
             className="text-center border border-light p-2"
             onSubmit={e => {
@@ -49,6 +47,10 @@ class AboutPAge extends Component {
             }}
           >
             <p className="h4 mb-4">Send us a message</p>
+             
+        <p className="text-left">
+           From
+           </p>
             <input
               type="text"
               className="form-control mt-2"

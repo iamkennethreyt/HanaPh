@@ -19,7 +19,7 @@ class ButtonPage extends Component {
           boxShadow: "2px 2px 3px #999,"
         }}
       >
-        <i className="fa fa-pencil fa-lg" style={{ marginTop: "11px" }} />
+        <i className="fa fa-plus fa-lg" style={{ marginTop: "11px" }} />
       </Link>
     );
   }

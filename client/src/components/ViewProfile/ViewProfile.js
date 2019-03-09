@@ -81,7 +81,7 @@ class AddJobAdvertisement extends Component {
         </small>
         <p>{details}</p>
         <strong>
-          Contact Info : <strong>{contactInfo}</strong>
+          Phone Number : <strong>{contactInfo}</strong>
         </strong>
         <p>
           Complete Address : <strong>{completeAddress}</strong>

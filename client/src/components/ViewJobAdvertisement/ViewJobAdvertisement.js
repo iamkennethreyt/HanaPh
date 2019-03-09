@@ -148,7 +148,7 @@ class AddJobAdvertisement extends Component {
                         if (this.state.resume === "nothing") {
                           confirmAlert({
                             message:
-                              "You haven't upload resume yet please upload resume before apply this advertisement",
+                              "You haven't uploaded a resume yet please upload before you apply for this advertisement",
                             buttons: [
                               {
                                 label: "Ok"

@@ -77,7 +77,7 @@ class Login extends Component {
 
           <input
             type="password"
-            className={classnames("form-control mt-2", {
+            className= {classnames("form-control mt-2", {
               "is-invalid": errors.password
             })}
             placeholder="Password"
