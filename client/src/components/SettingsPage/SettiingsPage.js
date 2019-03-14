@@ -92,6 +92,7 @@ class RegisterApplicant extends Component {
     this.props.updateCurrentUser(data, this.onSuccess);
   };
   render() {
+    // console.log(this.props.currentUser.resume);
     const { errors } = this.state;
     return (
       <div className="p-2 mt-5 mb-5">
@@ -226,69 +227,92 @@ class RegisterApplicant extends Component {
 
         {this.props.auth.user.type === "applicant" ? (
           <div className="">
-            <hr />
-
-            <form
-              className="mb-5 p-1"
-              encType="multipart/form-data"
-              onSubmit={e => {
-                e.preventDefault();
-                console.log("test");
-
-                const formData = new FormData();
-                formData.append(
-                  "file",
-                  this.state.selectedFile,
-                  this.state.selectedFile.name
-                );
-                axios
-                  .post("/api/users/upload", formData, {
-                    headers: {
-                      "Content-Type": "multipart/form-data"
-                    }
-                  })
-                  .then(() => {
-                    // import { confirmAlert } from "react-confirm-alert"; // Import
-                    confirmAlert({
-                      message: "You had successfully update your resume",
-                      buttons: [
-                        {
-                          label: "Ok"
-                        }
-                      ]
-                    });
-                  })
-                  .catch(err => {
-                    confirmAlert({
-                      message: "You have not selected resume yet",
-                      buttons: [
-                        {
-                          label: "Ok"
-                        }
-                      ]
-                    });
+            {this.props.currentUser.resume !== "nothing" ? (
+              <button
+                className="btn btn-block mt-2 btn-outline-default waves-effect"
+                onClick={() => {
+                  confirmAlert({
+                    message: "Are you sure do you want to delete your resume?",
+                    buttons: [
+                      {
+                        label: "Ok",
+                        onClick: () =>
+                          axios.delete("/api/users/deleteresume").then(() => {
+                            window.location.reload();
+                          })
+                      },
+                      {
+                        label: "Cancel"
+                      }
+                    ]
                   });
-              }}
-            >
-              <p className="text-center">RESUME</p>
-              <div className="custom-file">
+                }}
+              >
+                Delete Current Resume
+              </button>
+            ) : (
+              <form
+                className="mb-5 p-1"
+                encType="multipart/form-data"
+                onSubmit={e => {
+                  e.preventDefault();
+
+                  const formData = new FormData();
+                  formData.append(
+                    "file",
+                    this.state.selectedFile,
+                    this.state.selectedFile.name
+                  );
+                  axios
+                    .post("/api/users/upload", formData, {
+                      headers: {
+                        "Content-Type": "multipart/form-data"
+                      }
+                    })
+                    .then(() => {
+                      // import { confirmAlert } from "react-confirm-alert"; // Import
+                      confirmAlert({
+                        message: "You had successfully update your resume",
+                        buttons: [
+                          {
+                            label: "Ok",
+                            onClick: () => window.location.reload()
+                          }
+                        ]
+                      });
+                    })
+                    .catch(err => {
+                      confirmAlert({
+                        message: "You have not selected resume yet",
+                        buttons: [
+                          {
+                            label: "Ok"
+                          }
+                        ]
+                      });
+                    });
+                }}
+              >
+                <p className="text-center">RESUME</p>
+                <div className="custom-file">
+                  <input
+                    type="file"
+                    name="file"
+                    id="file"
+                    className="custom-file-input"
+                    onChange={this.handleselectedFile}
+                  />
+                  <label htmlFor="file" className="custom-file-label">
+                    Choose your Resume
+                  </label>
+                </div>
                 <input
-                  type="file"
-                  name="file"
-                  id="file"
-                  className="custom-file-input"
-                  onChange={this.handleselectedFile}
+                  type="submit"
+                  value="Upload Resume"
+                  className="btn mt-1 teal darken-2 btn-block"
                 />
-                <label htmlFor="file" className="custom-file-label">
-                  Choose your Resume
-                </label>
-              </div>
-              <input
-                type="submit"
-                value="Upload Resume"
-                className="btn mt-1 teal darken-2 btn-block"
-              />
-            </form>
+              </form>
+            )}
           </div>
         ) : null}
       </div>

@@ -256,6 +256,23 @@ router.put(
   }
 );
 
+//@route    PUT api/users/accountsettings
+//@desc     account settings of the current logged in user
+//@access   private
+router.delete(
+  "/deleteresume",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const userFields = {};
+
+    User.findOneAndUpdate(
+      { _id: req.user.id },
+      { $set: { resume: "nothing" } },
+      { new: true }
+    ).then(user => res.json(user));
+  }
+);
+
 //@route    GET api/users/current
 //@desc     return current user
 //@access   private
